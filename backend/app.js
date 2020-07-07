@@ -561,6 +561,39 @@ async function findSpeedLess(req,res){
   }
 }
 
+async function findSpeedGreater(req,res){
+  var piplineSpeed;
+  var starttime;
+  var endtime;
+  console.log(`Before the if check the req.query, is req null, ${req==null}, is req.query null: ${req.params == null}`)
+  if (req && req.params && req.params.starttime && req.params.endtime){
+    starttime = new Date(req.params.starttime);
+    endtime = new Date(req.params.endtime);
+  }
+  console.log(`start time :${req.params.starttime}`)
+  console.log(`End time :${req.params.endtime}`)
+
+  piplineSpeed= [
+    {'$match':{"$and":[{"starttime":{'$gt':starttime,'$lt':endtime}},{"speed":{'$gt':100}}]}},
+    {'$group':{
+      "_id":{"detector_id":"$detector_id"},
+      "totalnumber":{'$sum':1}
+    }},
+  ]
+  console.log(`show me the piplie ${JSON.stringify(piplineSpeed)}`)
+  try {
+    //var detectoridresult = await uniondata.aggregate(pipline1).exec();
+    var result = await highwaydata.aggregate(piplineSpeed);
+    // var idTest = JSON.parse(JSON.stringify(detectoridresult));
+    // console.log(idTest);
+    // console.log(idTest[0]._id.detectorid);
+    console.log(result);
+    return result
+  } catch (err) {
+      console.log(`error occured : ${err}`);
+  }
+}
+
 async function basedOnIdGetStation(req,res){
   var pipline;
   var id = req.params.id;
@@ -638,6 +671,10 @@ app.get("/lessthenfive/:starttime?/:endtime?",cors(),asyncHandler(async(req, res
   res.send(await findSpeedLess(req,res))
 }));
 
+app.get("/greaterthanhundred/:starttime?/:endtime?",cors(),asyncHandler(async(req, res,next)=>{
+  res.send(await findSpeedGreater(req,res))
+}));
+
 app.get("/:id",cors(),asyncHandler(async(req, res,next)=>{
   res.send(await basedOnIdGetStation(req,res))
 }));
@@ -645,4 +682,5 @@ app.get("/:id",cors(),asyncHandler(async(req, res,next)=>{
 app.listen(port, hostname, () => {
     console.log(`Server running at http://${hostname}:${port}/`);
   });
-  
+
+module.exports = app;
