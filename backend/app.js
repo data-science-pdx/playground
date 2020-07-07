@@ -561,6 +561,26 @@ async function findSpeedLess(req,res){
   }
 }
 
+async function basedOnIdGetStation(req,res){
+  var pipline;
+  var id = req.params.id;
+  console.log(`Before the if check the req.query, is req null, ${req==null}, is req.query null: ${req.params == null}`)
+  console.log(`ID :${req.params.id}`)
+
+  pipline= {"detectors.detectorid":id}
+  console.log(`show me the piplie ${JSON.stringify(pipline)}`)
+  try {
+    //var detectoridresult = await uniondata.aggregate(pipline1).exec();
+    var result = await highwaystations.find(pipline);
+    // var idTest = JSON.parse(JSON.stringify(detectoridresult));
+    // console.log(idTest);
+    // console.log(idTest[0]._id.detectorid);
+    console.log(result);
+    return result
+  } catch (err) {
+      console.log(`error occured : ${err}`);
+  }
+}
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -618,6 +638,9 @@ app.get("/lessthenfive/:starttime?/:endtime?",cors(),asyncHandler(async(req, res
   res.send(await findSpeedLess(req,res))
 }));
 
+app.get("/:id",cors(),asyncHandler(async(req, res,next)=>{
+  res.send(await basedOnIdGetStation(req,res))
+}));
 
 app.listen(port, hostname, () => {
     console.log(`Server running at http://${hostname}:${port}/`);
