@@ -1,0 +1,97 @@
+// India
+
+GET https://covid-193.p.rapidapi.com/statistics?country=India HTTP/1.1
+content-type: application/json
+x-rapidapi-host: covid-193.p.rapidapi.com
+x-rapidapi-key: 8f85c1201fmsh51eb755a885f708p13d495jsn4cd60f3bc7ed
+useQueryString: true
+
+###
+
+# grab all of the data
+
+GET https://covid-193.p.rapidapi.com/statistics HTTP/1.1
+content-type: application/json
+x-rapidapi-host: covid-193.p.rapidapi.com
+x-rapidapi-key: 8f85c1201fmsh51eb755a885f708p13d495jsn4cd60f3bc7ed
+useQueryString: true
+
+###
+
+// Réunion
+
+GET https://covid-193.p.rapidapi.com/statistics?country=Reunion HTTP/1.1
+content-type: application/json
+x-rapidapi-host: covid-193.p.rapidapi.com
+x-rapidapi-key: 8f85c1201fmsh51eb755a885f708p13d495jsn4cd60f3bc7ed
+useQueryString: true
+
+###
+
+// Curaçao
+
+GET https://covid-193.p.rapidapi.com/statistics?country=Curaçao HTTP/1.1
+content-type: application/json
+x-rapidapi-host: covid-193.p.rapidapi.com
+x-rapidapi-key: 8f85c1201fmsh51eb755a885f708p13d495jsn4cd60f3bc7ed
+useQueryString: true
+
+
+###
+
+# grab all of the data
+
+GET http://localhost:3001/station HTTP/1.1
+content-type: application/json
+
+
+
+###
+
+# Get station latlon 
+
+GET http://localhost:3001/lat/Sunnyside%20NB HTTP/1.1
+content-type: application/json
+
+
+###
+
+# Get Station Name
+GET http://localhost:3001/stationname HTTP/1.1
+content-type: application/json
+
+###
+
+# Convert  Station Name to ID
+GET http://localhost:3001/id/Sunnyside%20NB HTTP/1.1
+content-type: application/json
+
+###
+
+# Get total volume and total average speed
+GET http://localhost:3001/sv/Sunnyside%20NB/1345,1346,1347/2011-10-15/2011-11-20 HTTP/1.1
+content-type: application/json
+
+
+
+###
+
+# Get overspeed
+GET http://localhost:3001/speed/1345,1346,1347/2011-10-15/2011-11-20 HTTP/1.1
+content-type: application/json
+
+
+
+###
+
+# Get stations details
+GET http://localhost:3001/details/Sunnyside%20NB HTTP/1.1
+content-type: application/json
+
+
+###
+
+# Get total volume and total average speed
+GET http://localhost:3001/sv/Sunnyside%20NB/1361,1362,1363/2011-10-12/2011-10-13 HTTP/1.1
+content-type: application/json
+

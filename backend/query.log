@@ -1,0 +1,48 @@
+db.getCollection('loopdata').aggregate([{'$match':{"detectorid":{"$in":[1345,1346,1347,1348]}}},
+{'$match':{"starttime":{'$gt':new Date("2011-10-15"),'$lt':new Date("2011-10-20")}}},
+{'$group':{
+    "_id":{"detectorid":"$detectorid"},
+    "totalvolume":{'$sum':"$volume"},
+    "totalspeed":{'$sum':"$speed"},
+     
+}},
+
+ {$project:
+           {
+             "detectorid": 1,
+              "totalvolume",
+               "totalspeed",
+                "overspeed":
+               {
+                    $cond: { if: { $gte: [ "speed", 60 ] }, then: {"$sum":"$speed"}, else: null }
+               }
+           }
+
+}
+])
+
+
+{
+    "$group": {
+        "_id":{"detectorid":"$detectorid"},
+         "overspeed":
+               {
+                    $cond: { if: { $gte: [ "speed", 60 ] }, then: {"$sum":"$speed"}, else: null }
+               }
+            
+    }
+}
+
+
+[
+      {
+         $project:
+           {
+             "detectorid": 1,
+                "overspeed":
+               {
+                    $cond: { if: { $gte: [ "speed", 60 ] }, then: {"test":{"$sum":"$speed"}}, else: null }
+               }
+           }
+      }
+   ]
