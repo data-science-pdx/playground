@@ -18,7 +18,6 @@ var app = express();
 const hostname = '127.0.0.1';
 const port = 3001;
 
-
 app.use(cors());
 
 mongoose.connect('mongodb://localhost:27017/freeway', {useNewUrlParser: true});
@@ -759,6 +758,7 @@ app.get("/detailssummary/:idlist/:starttime?/:endtime?",async(req, res,next)=>{
 });
 
 app.listen(port, hostname, () => {
-    console.log(`Server running at http://${hostname}:${port}/`);
-  });
-  
+  console.log(`Server running at http://${hostname}:${port}/`);
+});
+
+module.exports = app;
