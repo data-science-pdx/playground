@@ -33,7 +33,7 @@ export const FristGraph = () => {
         }
 
         async function doFetchLessThenFive() {
-            let tmp =[]
+            //let tmp =[]
             setIsLoading(true)
             let resp = await (fetch(url, {
                 headers: requestHeaders
@@ -41,13 +41,14 @@ export const FristGraph = () => {
             if (resp.ok) {
                 const dataValue = await resp.json()
                 setLowSpeed(dataValue)
-                
+                /*
                 for (var i = 0; i<dataValue.length;i++){
                     tmp.push(dataValue[i]._id.detector_id)
                     console.log(`@@@@@@@@@@@@@@@@@@@@@${detectorids}`)
                     console.log(`!!!!!!!!!!!!!!!!!!!!!!${dataValue[i]._id.detector_id}`)
                 }
-                setDetectorids(detectorids.concat(tmp))
+                */
+                setDetectorids(detectorids.concat(dataValue))
                 setIsLoading(false)
             } else {
                 console.log("in else loop")
@@ -56,19 +57,19 @@ export const FristGraph = () => {
         }
 
         async function doFetchGreater() {
-            var tmp=[]
+            //var tmp=[]
             let resp = await (fetch(urlTwo, {
                 headers: requestHeaders
             })).catch(handleError)
             if (resp.ok) {
                 const dataValue = await resp.json()
                 setGreaterSpeed(dataValue)
-                
+                /*
                 for (var i = 0; i<dataValue.length;i++){
                     tmp.push(dataValue[i]._id.detector_id)
                     console.log(`@@@@@@@@@@@@@@@@@@@@@${detectorids}`)
-                }
-                setDetectorids(detectorids.concat(tmp))
+                }*/
+                setDetectorids(detectorids.concat(dataValue))
             } else {
                 console.log("in else loop")
             }

@@ -7,7 +7,12 @@ export const DetailsTable = () => {
     const { detectorids, station,setStation, } = useContext(Context)
     const [runMap, setRunMap] = useState(false)
 
-    let url = `http://localhost:3001/${detectorids}`
+    let idlist = []
+    for (var i = 0; i<detectorids.length;i++){
+        idlist.push(detectorids[i]._id.detector_id)
+    }
+    
+    let url = `http://localhost:3001/${idlist}`
     //const url = `http://localhost:3001/100555`
 
     useEffect(() => {
