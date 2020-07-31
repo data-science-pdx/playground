@@ -1,3 +1,14 @@
+html,
+body {
+    height: 100%;
+    scroll-padding-top: 100px
+}
+
+.Site-content {
+    padding-top: 100px;
+    margin-bottom: 100px;
+}
+
 .leaflet-container {
     height: 600px;
     width: 100%;

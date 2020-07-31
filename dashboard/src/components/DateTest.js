@@ -1,12 +1,13 @@
 import React, { useContext} from "react";
 import { Context } from "./Context";
+import moment from "moment";
 
 export const DateTest = () => {
     const { startDate, endDate } = useContext(Context)
 
-    return (<div>
-            <div>{new Date(startDate).toString()}</div>
-            <div>{new Date(endDate).toString()}</div>
-        </div>
+    return (
+        <span>
+            You are search from <b>{moment(startDate).format("dddd, MMMM Do YYYY")}</b> to <b>{moment(endDate).format("dddd, MMMM Do YYYY")}</b>.
+        </span>
     )
 }

@@ -1,6 +1,5 @@
 import React, { useContext,useEffect, useState} from "react";
 import { Context } from "./Context"
-import { Media } from 'react-bootstrap';
 import {Map, Marker, Popup, TileLayer} from 'react-leaflet'
 import './stylesheet.css'
 
@@ -68,21 +67,17 @@ export const DetailsTable = () => {
                     {station && station.map((item, i_key) =>
                         <Marker key={i_key} position={[item.lon, item.lat]}>
                             <Popup position={[item.lon, item.lat]} maxHeight="30px">
-                                <Media>
-                                    <h2>{item.locationtext}</h2>
-                                    <Media.Body>
-                                        <b>station id</b>: {item.stationid}<br/>
-                                        <b>highway id</b>: {item.highwayid}<br/>
-                                        <b>milepost</b>: {item.milepost}<br/>
-                                        <b>length</b>: {item.length}<br/>
-                                        <b>Detectors</b>:<br/>
-                                        {item.detectors.map(e =>
-                                            <li>
-                                                Detector id of lane {e.lanenumber}: <a>{e.detectorid}</a>
-                                            </li>
-                                        )}
-                                    </Media.Body>
-                                </Media>
+                                <h5>{item.locationtext}</h5>
+                                    <b>station id</b>: {item.stationid}<br/>
+                                    <b>highway id</b>: {item.highwayid}<br/>
+                                    <b>milepost</b>: {item.milepost}<br/>
+                                    <b>length</b>: {item.length}<br/>
+                                    <b>Detectors</b>:<br/>
+                                    {item.detectors.map(e =>
+                                        <li key={e.detectorid}>
+                                            Detector id of lane {e.lanenumber}: <a>{e.detectorid}</a>
+                                        </li>
+                                    )}
                             </Popup>
                         </Marker>
                     )}
