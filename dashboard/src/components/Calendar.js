@@ -1,6 +1,6 @@
 import React, { useContext } from "react"
 import { Context } from "./Context"
-import utils from "./utils"
+import utils from "./Utils"
 import {Col, Form} from "react-bootstrap";
 
 const MIN_DATE = utils.formatDate(new Date("2020-01-01"))

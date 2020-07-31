@@ -1,6 +1,6 @@
 import React, { useState } from "react"
 import { Context } from "./Context"
-import utils from "./utils"
+import utils from "./Utils"
 
 const ContextProvider = (props) => {
     const [startDate, setStartDate] = useState(utils.formatDate(new Date("2020-02-20")))
