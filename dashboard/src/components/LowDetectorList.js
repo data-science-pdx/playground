@@ -2,7 +2,7 @@ import React, { useContext} from "react"
 import { Context } from "./Context"
 
 const LowDetectorList = () => {
-    const {lowSpeed,detectorid, setDetectorid} = useContext(Context)
+    const {lowSpeed} = useContext(Context)
 
     const renderHeader = () => {
         return <thead>
@@ -15,8 +15,6 @@ const LowDetectorList = () => {
 
     const renderRows = () => {
         if(lowSpeed!=null){
-            console.log(`testing: ${JSON.stringify(lowSpeed)}`)
-            
             return lowSpeed.map((data) => {
                 let id = data._id.detector_id
                 let number = data.totalnumber

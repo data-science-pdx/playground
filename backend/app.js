@@ -626,11 +626,11 @@ async function findGoodSpeed(req,res){
 
 async function basedOnIdGetStation(req,res){
   var pipline;
-  var id = req.params.id;
+  var idlist = req.params.idlist.split(",").map(x=>Number(x));
   console.log(`Before the if check the req.query, is req null, ${req==null}, is req.query null: ${req.params == null}`)
-  console.log(`ID :${req.params.id}`)
+  console.log(`ID :${req.params.idlist}`)
 
-  pipline= {"detectors.detectorid":id}
+  pipline= {"detectors.detectorid":{"$in":idlist}}
   console.log(`show me the piplie ${JSON.stringify(pipline)}`)
   try {
     //var detectoridresult = await uniondata.aggregate(pipline1).exec();
@@ -690,10 +690,10 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
 
 //getTravelTime(req,res)
-app.get("/traveltime/:location/:starttime?/:endtime?",cors(),asyncHandler(async(req, res,next)=>{
+app.get("/traveltime/:location/:starttime?/:endtime?",async(req, res,next)=>{
     //getTravelTime(req,res)
     res.send(await getTravelTime(req,res))
-  }));
+  });
 
   //Station lation(req,res)
 app.get("/lat/:location",cors(),asyncHandler(async(req, res,next)=>{
@@ -733,32 +733,32 @@ app.get("/id/:location",cors(),asyncHandler(async(req, res,next)=>{
 }));
 
 //All the station name
-app.get("/stationname",cors(),asyncHandler(async(req, res,next)=>{
+app.get("/stationname",async(req, res,next)=>{
   res.send(await getAllStationsName(req,res))
-}));
+});
 
-app.get("/lessthenfive/:starttime?/:endtime?",cors(),asyncHandler(async(req, res,next)=>{
+app.get("/lessthenfive/:starttime?/:endtime?",async(req, res,next)=>{
   res.send(await findSpeedLess(req,res))
-}));
+});
 
-app.get("/greaterthen/:starttime?/:endtime?",cors(),asyncHandler(async(req, res,next)=>{
+app.get("/greaterthen/:starttime?/:endtime?",async(req, res,next)=>{
   res.send(await findSpeedGreater(req,res))
-}));
+});
 
-app.get("/goodspeed/:starttime?/:endtime?",cors(),asyncHandler(async(req, res,next)=>{
+app.get("/goodspeed/:starttime?/:endtime?",async(req, res,next)=>{
   res.send(await findGoodSpeed(req,res))
-}));
+});
 
 
-app.get("/:id",cors(),asyncHandler(async(req, res,next)=>{
+app.get("/:idlist",async(req, res,next)=>{
   res.send(await basedOnIdGetStation(req,res))
-}));
+});
 
-app.get("/detailssummary/:idlist/:starttime?/:endtime?",cors(),asyncHandler(async(req, res,next)=>{
+app.get("/detailssummary/:idlist/:starttime?/:endtime?",async(req, res,next)=>{
   res.send(await speedAndVolumeAndTravelTime(req,res))
-}));
+});
 
 app.listen(port, hostname, () => {
     console.log(`Server running at http://${hostname}:${port}/`);
   });
-module.exports = app;
+  

@@ -2,7 +2,7 @@ import React, { useContext, useEffect } from "react"
 import { Context } from "./Context"
 
 const HighDetectorList = () => {
-    const {greaterSpeed,detectorid, setDetectorid} = useContext(Context)
+    const {greaterSpeed} = useContext(Context)
 
     const renderHeader = () => {
         return <thead>
@@ -15,7 +15,6 @@ const HighDetectorList = () => {
 
     const renderRows = () => {
         if(greaterSpeed!=null){
-            console.log(`testing: ${JSON.stringify(greaterSpeed)}`)
             
             return greaterSpeed.map((data) => {
                 let id = data._id.detector_id

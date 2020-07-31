@@ -2,15 +2,14 @@ import React, { useContext,useEffect} from "react";
 import { Context } from "./Context"
 
 export const DetailsTable = () => {
-    const { detectorid,station,setStation, } = useContext(Context)
-    //const url = `http://localhost:3001/${detectorid}`
-    const url = `http://localhost:3001/100555`
+    const { detectorids, station,setStation, } = useContext(Context)
+    let url = `http://localhost:3001/${detectorids}`
+    //const url = `http://localhost:3001/100555`
 
     useEffect(() => {
         const requestHeaders = {
             "method": "POST",
             "Content-type": "application/json",
-            "Access-Control-Allow-Origin": "*",
         }
 
         const handleError = (err) => {
@@ -30,7 +29,6 @@ export const DetailsTable = () => {
         }
 
         async function doFetchStationInfo() {
-            console.log(`the url test:${url}`)
             let resp = await (fetch(url, {
                 headers: requestHeaders
             })).catch(handleError)
@@ -70,7 +68,7 @@ export const DetailsTable = () => {
     const renderTable = () => {
         return <table className="ui striped table">
             {renderHeader()}
-            <tbody>{renderRows()}</tbody>
+            <tbody>{JSON.stringify(station)}</tbody>
         </table>
     }
 
