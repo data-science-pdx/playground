@@ -65,24 +65,43 @@ export const DetailsTable = () => {
 
     const renderMap = () => {
         const portland = [45.5135, -122.6801]
+        if(station && detectorids){
+            detectorids.map(d_item => {
+                station.map(s_item => {
+                    s_item.detectors.map(sd_item => {
+                        if(sd_item.detectorid === d_item._id.detector_id){
+                            sd_item.totalnumber = d_item.totalnumber
+                        }
+                    })
+                })
+            })
+        }
+        console.log(station)
+
         if(runMap) {
             return (
-                <Map center={portland} zoom={7}>
+                <Map center={portland} zoom={7} zoomControl={true}>
                     <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'/>
                     {station && station.map((item, i_key) =>
                         <Marker key={i_key} position={[item.lon, item.lat]}>
                             <Popup position={[item.lon, item.lat]} maxHeight="30px">
-                                <h5>{item.locationtext}</h5>
-                                    <b>station id</b>: {item.stationid}<br/>
-                                    <b>highway id</b>: {item.highwayid}<br/>
-                                    <b>milepost</b>: {item.milepost}<br/>
-                                    <b>length</b>: {item.length}<br/>
-                                    <b>Detectors</b>:<br/>
-                                    {item.detectors.map(e =>
-                                        <li key={e.detectorid}>
-                                            Detector id of lane {e.lanenumber}: <a>{e.detectorid}</a>
-                                        </li>
-                                    )}
+                                <h6>{item.locationtext}</h6><hr/>
+                                <b>Station ID</b>: {item.stationid}<br/>
+                                <b>Highway ID</b>: {item.highwayid}<br/>
+                                <b>Milepost</b>: {item.milepost}<br/>
+                                <b>Length</b>: {item.length} mi<br/><hr/>
+                                <b>Detectors Status</b>:<br/>
+                                {item.detectors.map(e =>
+                                    <li key={e.detectorid}>
+                                        ID <a>{e.detectorid}</a> at lane {e.lanenumber}:
+                                        {e.totalnumber &&
+                                            <span className="malfunctioning"><b> {e.totalnumber}</b> errors occurred!</span>
+                                        }
+                                        {!e.totalnumber &&
+                                            <span className="working"> up</span>
+                                        }
+                                    </li>
+                                )}
                             </Popup>
                         </Marker>
                     )}
