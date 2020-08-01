@@ -4,7 +4,7 @@ import {Map, Marker, Popup, TileLayer} from 'react-leaflet'
 import './stylesheet.css'
 
 export const DetailsTable = () => {
-    const { detectoridsLow,detectoridsHigh,station,setStation, } = useContext(Context)
+    const { detectoridsLow,detectoridsHigh,station,setStation,greaterSpeed,lowSpeed } = useContext(Context)
     const [runMap, setRunMap] = useState(false)
 
     let idlist = []
