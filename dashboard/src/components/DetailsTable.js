@@ -65,12 +65,23 @@ export const DetailsTable = () => {
 
     const renderMap = () => {
         const portland = [45.5135, -122.6801]
-        if(station && detectorids){
-            detectorids.map(d_item => {
+        if(station && greaterSpeed){
+            greaterSpeed.map(d_item => {
                 station.map(s_item => {
                     s_item.detectors.map(sd_item => {
                         if(sd_item.detectorid === d_item._id.detector_id){
-                            sd_item.totalnumber = d_item.totalnumber
+                            sd_item.totalGnumber = d_item.totalnumber
+                        }
+                    })
+                })
+            })
+        }
+        if(station && lowSpeed){
+            lowSpeed.map(d_item => {
+                station.map(s_item => {
+                    s_item.detectors.map(sd_item => {
+                        if(sd_item.detectorid === d_item._id.detector_id){
+                            sd_item.totalLnumber = d_item.totalnumber
                         }
                     })
                 })
@@ -94,10 +105,13 @@ export const DetailsTable = () => {
                                 {item.detectors.map(e =>
                                     <li key={e.detectorid}>
                                         ID <a>{e.detectorid}</a> at lane {e.lanenumber}:
-                                        {e.totalnumber &&
-                                            <span className="malfunctioning"><b> {e.totalnumber}</b> errors occurred!</span>
+                                        {e.totalGnumber &&
+                                            <span className="overspeed"><b> {e.totalGnumber}</b> errors(Overspeed) occurred! </span>
                                         }
-                                        {!e.totalnumber &&
+                                        {e.totalLnumber &&
+                                        <span className="underspeed"><b> {e.totalLnumber}</b> errors(Underspeed) occurred! </span>
+                                        }
+                                        {(!e.totalGnumber && !e.totalLnumber)&&
                                             <span className="working"> up</span>
                                         }
                                     </li>

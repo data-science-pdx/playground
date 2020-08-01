@@ -14,8 +14,12 @@ body {
     width: 100%;
 }
 
-.malfunctioning {
+.underspeed {
     color: red;
+}
+
+.overspeed {
+    color: orangered;
 }
 
 .working {
