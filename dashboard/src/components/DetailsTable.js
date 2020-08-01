@@ -4,14 +4,14 @@ import {Map, Marker, Popup, TileLayer} from 'react-leaflet'
 import './stylesheet.css'
 
 export const DetailsTable = () => {
-    const { detectorids, station,setStation, } = useContext(Context)
+    const { detectoridsLow,detectoridsHigh,station,setStation, } = useContext(Context)
     const [runMap, setRunMap] = useState(false)
 
     let idlist = []
-    for (var i = 0; i<detectorids.length;i++){
-        idlist.push(detectorids[i]._id.detector_id)
-    }
-    
+    idlist=detectoridsHigh.concat(detectoridsLow)
+    console.log(`#############################${idlist}`)
+    //const url = `http://localhost:3001/100555`
+
     let url = `http://localhost:3001/${idlist}`
     //const url = `http://localhost:3001/100555`
 

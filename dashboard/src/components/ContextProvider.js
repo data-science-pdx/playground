@@ -17,7 +17,8 @@ const ContextProvider = (props) => {
     const [lowSpeed, setLowSpeed] = useState()
     const [greaterSpeed, setGreaterSpeed] = useState()
     const [goodSpeed, setGoodSpeed] = useState()
-    const [detectorids, setDetectorids] = useState([])
+    const [detectoridsLow, setDetectoridsLow] = useState([])
+    const [detectoridsHigh, setDetectoridsHigh] = useState([])
 
 
     return (
@@ -37,7 +38,8 @@ const ContextProvider = (props) => {
                 lowSpeed, setLowSpeed,
                 greaterSpeed, setGreaterSpeed,
                 goodSpeed, setGoodSpeed,
-                detectorids, setDetectorids
+                detectoridsLow, setDetectoridsLow,
+                detectoridsHigh, setDetectoridsHigh
             }}
         >
             {props.children}

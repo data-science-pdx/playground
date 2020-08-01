@@ -4,7 +4,7 @@ import {Pie} from 'react-chartjs-2';
 
 
 export const FristGraph = () => {
-    const { startDate, endDate, detectorids, setDetectorids,isloading,setIsLoading,showSpinner,setShowSpinner,goodSpeed, setGoodSpeed,greaterSpeed, setGreaterSpeed,lowSpeed, setLowSpeed } = useContext(Context)
+    const { startDate, endDate, detectoridsLow, setDetectoridsLow,isloading,setIsLoading,detectoridsHigh, setDetectoridsHigh,goodSpeed, setGoodSpeed,greaterSpeed, setGreaterSpeed,lowSpeed, setLowSpeed } = useContext(Context)
 
     const url = `http://localhost:3001/lessthenfive/${startDate}/${endDate}`
     const urlTwo = `http://localhost:3001/greaterthen/${startDate}/${endDate}`
@@ -33,7 +33,7 @@ export const FristGraph = () => {
         }
 
         async function doFetchLessThenFive() {
-            //let tmp =[]
+            let tmp =[]
             setIsLoading(true)
             let resp = await (fetch(url, {
                 headers: requestHeaders
@@ -41,14 +41,12 @@ export const FristGraph = () => {
             if (resp.ok) {
                 const dataValue = await resp.json()
                 setLowSpeed(dataValue)
-                /*
                 for (var i = 0; i<dataValue.length;i++){
                     tmp.push(dataValue[i]._id.detector_id)
-                    console.log(`@@@@@@@@@@@@@@@@@@@@@${detectorids}`)
+                    console.log(`@@@@@@@@@@@@@@@@@@@@@${detectoridsLow}`)
                     console.log(`!!!!!!!!!!!!!!!!!!!!!!${dataValue[i]._id.detector_id}`)
                 }
-                */
-                setDetectorids(detectorids.concat(dataValue))
+                setDetectoridsLow(detectoridsLow.concat(tmp))
                 setIsLoading(false)
             } else {
                 console.log("in else loop")
@@ -57,19 +55,19 @@ export const FristGraph = () => {
         }
 
         async function doFetchGreater() {
-            //var tmp=[]
+            var tmp=[]
             let resp = await (fetch(urlTwo, {
                 headers: requestHeaders
             })).catch(handleError)
             if (resp.ok) {
                 const dataValue = await resp.json()
                 setGreaterSpeed(dataValue)
-                /*
+                
                 for (var i = 0; i<dataValue.length;i++){
                     tmp.push(dataValue[i]._id.detector_id)
-                    console.log(`@@@@@@@@@@@@@@@@@@@@@${detectorids}`)
-                }*/
-                setDetectorids(detectorids.concat(dataValue))
+                    console.log(`@@@@@@@@@@@@@@@@@@@@@${detectoridsHigh}`)
+                }
+                setDetectoridsHigh(detectoridsHigh.concat(tmp))
             } else {
                 console.log("in else loop")
             }
@@ -93,7 +91,7 @@ export const FristGraph = () => {
         doFetchGoodSpeed()
         doFetchGreater()
         doFetchLessThenFive()
-    }, [url,setLowSpeed,setGreaterSpeed,setGoodSpeed,setIsLoading,setDetectorids])
+    }, [url,setLowSpeed,setGreaterSpeed,setGoodSpeed,setIsLoading,setDetectoridsLow,setDetectoridsHigh])
     /*
     const renderDashboard = () => {
         return <>
@@ -111,14 +109,14 @@ export const FristGraph = () => {
             //let result = JSON.stringify(lowSpeed)
             console.log(`testing: ${lowSpeed.length}`)
             console.log(`testing: ${lowSpeed[0]._id.detector_id}`)
-            console.log(`@@@@@@@@@@@@@@@@@@@@@${detectorids}`)
+            console.log(`@@@@@@@@@@@@@@@@@@@@@${detectoridsLow}`)
         }
         return <>
             <h1>{`testing: ${JSON.stringify(lowSpeed)}`}</h1>
             <p>-------------------------------------------</p>
             <h1>{`testing: ${JSON.stringify(greaterSpeed)}`}</h1>
             <p>---------------------------------</p>
-            <h1>{`Array: ${JSON.stringify(detectorids)}`}</h1>
+            <h1>{`Array: ${JSON.stringify(detectoridsHigh)}`}</h1>
         </>
     }
 
