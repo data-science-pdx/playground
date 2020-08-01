@@ -1,5 +1,6 @@
 import React, { useContext, useEffect } from "react"
 import { Context } from "./Context"
+import './tableStyle.css'
 
 const HighDetectorList = () => {
     const {greaterSpeed} = useContext(Context)

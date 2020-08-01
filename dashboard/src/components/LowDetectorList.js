@@ -1,5 +1,6 @@
 import React, { useContext} from "react"
 import { Context } from "./Context"
+import './tableStyle.css'
 
 const LowDetectorList = () => {
     const {lowSpeed} = useContext(Context)
