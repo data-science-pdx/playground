@@ -1,10 +1,10 @@
 import React, { useContext, useEffect } from "react"
 import { Context } from "./Context"
-import {Pie} from 'react-chartjs-2';
+import {HorizontalBar, Pie} from 'react-chartjs-2';
 
 
-export const FristGraph = () => {
-    const { startDate, endDate, detectoridsLow, setDetectoridsLow,isloading,setIsLoading,detectoridsHigh, setDetectoridsHigh,goodSpeed, setGoodSpeed,greaterSpeed, setGreaterSpeed,lowSpeed, setLowSpeed } = useContext(Context)
+export const Graphs = () => {
+    const {startDate, endDate, detectoridsLow, setDetectoridsLow, isloading, setIsLoading, detectoridsHigh, setDetectoridsHigh, goodSpeed, setGoodSpeed, greaterSpeed, setGreaterSpeed, lowSpeed, setLowSpeed} = useContext(Context)
 
     const url = `http://localhost:3001/lessthenfive/${startDate}/${endDate}`
     const urlTwo = `http://localhost:3001/greaterthen/${startDate}/${endDate}`
@@ -33,7 +33,7 @@ export const FristGraph = () => {
         }
 
         async function doFetchLessThenFive() {
-            let tmp =[]
+            let tmp = []
             setIsLoading(true)
             let resp = await (fetch(url, {
                 headers: requestHeaders
@@ -41,7 +41,7 @@ export const FristGraph = () => {
             if (resp.ok) {
                 const dataValue = await resp.json()
                 setLowSpeed(dataValue)
-                for (var i = 0; i<dataValue.length;i++){
+                for (var i = 0; i < dataValue.length; i++) {
                     tmp.push(dataValue[i]._id.detector_id)
                     console.log(`@@@@@@@@@@@@@@@@@@@@@${detectoridsLow}`)
                     console.log(`!!!!!!!!!!!!!!!!!!!!!!${dataValue[i]._id.detector_id}`)
@@ -55,15 +55,15 @@ export const FristGraph = () => {
         }
 
         async function doFetchGreater() {
-            var tmp=[]
+            var tmp = []
             let resp = await (fetch(urlTwo, {
                 headers: requestHeaders
             })).catch(handleError)
             if (resp.ok) {
                 const dataValue = await resp.json()
                 setGreaterSpeed(dataValue)
-                
-                for (var i = 0; i<dataValue.length;i++){
+
+                for (var i = 0; i < dataValue.length; i++) {
                     tmp.push(dataValue[i]._id.detector_id)
                     console.log(`@@@@@@@@@@@@@@@@@@@@@${detectoridsHigh}`)
                 }
@@ -88,10 +88,11 @@ export const FristGraph = () => {
                 console.log("in else loop")
             }
         }
+
         doFetchGoodSpeed()
         doFetchGreater()
         doFetchLessThenFive()
-    }, [url,setLowSpeed,setGreaterSpeed,setGoodSpeed,setIsLoading,setDetectoridsLow,setDetectoridsHigh])
+    }, [url, setLowSpeed, setGreaterSpeed, setGoodSpeed, setIsLoading, setDetectoridsLow, setDetectoridsHigh])
     /*
     const renderDashboard = () => {
         return <>
@@ -100,12 +101,10 @@ export const FristGraph = () => {
         </>
     }*/
 
-    
-    
 
     const renderTest = () => {
-        
-        if (lowSpeed !=null){
+
+        if (lowSpeed != null) {
             //let result = JSON.stringify(lowSpeed)
             console.log(`testing: ${lowSpeed.length}`)
             console.log(`testing: ${lowSpeed[0]._id.detector_id}`)
@@ -120,49 +119,90 @@ export const FristGraph = () => {
         </>
     }
 
-    const piechart=()=>{
+    const pieChart = () => {
         //let graphData = {}
-        if (lowSpeed !=null && greaterSpeed !=null && goodSpeed!=null ){
+        if (lowSpeed != null && greaterSpeed != null && goodSpeed != null) {
             let data = {
                 labels: [
-                'Red',
-                'Blue',
-                'Yellow'
+                    'Low',
+                    'Greater',
+                    'Good'
                 ],
                 datasets: [{
-                data: [lowSpeed.length, greaterSpeed.length, goodSpeed.length],
-                backgroundColor: [
-                '#FF6384',
-                '#36A2EB',
-                '#FFCE56'
-                ],
-                hoverBackgroundColor: [
-                '#FF6384',
-                '#36A2EB',
-                '#FFCE56'
-                ]
+                    data: [lowSpeed.length, greaterSpeed.length, goodSpeed.length],
+                    backgroundColor: [
+                        '#FF6384',
+                        '#FFCE56',
+                        '#36A2EB'
+                    ],
+                    hoverBackgroundColor: [
+                        '#FF6384',
+                        '#FFCE56',
+                        '#36A2EB'
+                    ]
                 }]
             }
-        return (
+            return (
                 <div>
-                <h2>Pie Example</h2>
-                <Pie data={data} />
+                    <h2>Good/bad Ratio</h2>
+                    <Pie data={data}/>
                 </div>
-                );
+            );
+        }
+    }
+
+    const lineOptions = {
+        onClick: (e, element) => {
+            if (element.length > 0) {
+                let ind = element[0]._index;
+                alert(lowSpeed[ind]._id.detector_id + ": " + lowSpeed[ind].totalnumber);
             }
         }
+    }
 
+    const HorizontalChart = (object, header) => {
+        if (object != null) {
+            let key = []
+            let value = []
+            object.forEach(i => {
+                key.push(i._id.detector_id)
+                value.push(i.totalnumber)
+            })
+
+            let data = {
+                labels: key,
+                datasets: [{
+                    label: "errors occurred",
+                    data: value,
+                    backgroundColor: 'rgba(99, 210, 255, 0.2)',
+                    borderColor: 'rgba(99, 210, 255, 1)',
+                    borderWidth: 1,
+                    hoverBackgroundColor: 'rgba(99, 210, 255, 0.4)',
+                    hoverBorderColor: 'rgba(99, 210, 255, 1)',
+                }]
+            }
+            return (
+                <div>
+                    <h4>{header}</h4>
+                    <HorizontalBar data={data} options={lineOptions}/>
+                </div>
+            )
+        }
+    }
 
     const render = () => {
         //let showCovidResults = !isCovidLoading
         let showGraph = !isloading
-        return <div className="ui container">
-            <div >
-                Testing the API
-                {showGraph && renderTest()}
-                {showGraph && piechart()}
+        return (
+            <div className="ui container my-5">
+                <div>
+                    {/*{showGraph && renderTest()}*/}
+                    {showGraph && pieChart()}
+                    {showGraph && HorizontalChart(lowSpeed, "less bar")}
+                    {showGraph && HorizontalChart(greaterSpeed, "greater bar")}
+                </div>
             </div>
-        </div>
+        )
     }
 
     return (

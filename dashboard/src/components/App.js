@@ -4,7 +4,7 @@ import ContextProvider from "./ContextProvider"
 import { Context } from "./Context"
 import {DateTest} from "./DateTest"
 import {Calendar} from "./Calendar"
-import {FristGraph} from "./FristGraph"
+import {Graphs} from "./Graphs"
 import LowDetectorList from "./LowDetectorList"
 import HighDetectorList from "./HighDetectorList"
 import {DetailsTable} from "./DetailsTable"
@@ -18,9 +18,11 @@ function App(){
                 <Header/>
                 <section id="Date"><Calendar/></section>
                 <DateTest/>
-                <section id="Pie"><FristGraph/></section>
-                <section id="Table"><LowDetectorList/></section>
-                <h5><HighDetectorList/></h5>
+                <section id="Pie"><Graphs/></section>
+                <section id="Table">
+                    <LowDetectorList/>
+                    <HighDetectorList/>
+                </section>
                 <section id="Map" ><DetailsTable/></section>
                 <Footer/>
             </ContextProvider>
