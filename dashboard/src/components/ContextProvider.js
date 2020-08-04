@@ -16,9 +16,11 @@ const ContextProvider = (props) => {
     const [showSpinner, setShowSpinner] = useState(false)
     const [lowSpeed, setLowSpeed] = useState()
     const [greaterSpeed, setGreaterSpeed] = useState()
+    const [nullSpeed, setNullSpeed] = useState()
     const [goodSpeed, setGoodSpeed] = useState()
     const [detectoridsLow, setDetectoridsLow] = useState([])
     const [detectoridsHigh, setDetectoridsHigh] = useState([])
+    const [detectoridsNull, setDetectoridsNull] = useState([])
     const [detectorId, setDetectorId] = useState(0)
 
 
@@ -38,7 +40,9 @@ const ContextProvider = (props) => {
                 showSpinner,setShowSpinner,
                 lowSpeed, setLowSpeed,
                 greaterSpeed, setGreaterSpeed,
+                nullSpeed, setNullSpeed,
                 goodSpeed, setGoodSpeed,
+                detectoridsNull, setDetectoridsNull,
                 detectoridsLow, setDetectoridsLow,
                 detectoridsHigh, setDetectoridsHigh,
                 detectorId, setDetectorId

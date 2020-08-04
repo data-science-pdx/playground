@@ -5,7 +5,7 @@ import {HorizontalBar, Pie} from 'react-chartjs-2';
 import {Modal, Button} from "react-bootstrap";
 
 export const ChartBars = () => {
-    const {startDate, endDate, detectoridsLow, setDetectoridsLow, isloading, setIsLoading, detectoridsHigh, setDetectoridsHigh, goodSpeed, setGoodSpeed, greaterSpeed, setGreaterSpeed, lowSpeed, setLowSpeed, detectorId, setDetectorId} = useContext(Context)
+    const {startDate, endDate, detectoridsLow, setDetectoridsLow, isloading, setIsLoading, detectoridsHigh, setDetectoridsHigh, detectoridsNull, setDetectoridsNull, goodSpeed, setGoodSpeed, greaterSpeed, setGreaterSpeed, nullSpeed, setNullSpeed, lowSpeed, setLowSpeed, detectorId, setDetectorId} = useContext(Context)
     const [show, setShow] = useState(false);
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
@@ -13,6 +13,7 @@ export const ChartBars = () => {
     const url = `http://localhost:3001/lessthenfive/${startDate}/${endDate}`
     const urlTwo = `http://localhost:3001/greaterthen/${startDate}/${endDate}`
     const urlThree = `http://localhost:3001/goodspeed/${startDate}/${endDate}`
+    const urlNull = `http://localhost:3001/null/${startDate}/${endDate}`
     useEffect(() => {
         const requestHeaders = {
             "method": "POST",
@@ -93,10 +94,27 @@ export const ChartBars = () => {
             }
         }
 
+        async function doFetchNullSpeed() {
+            let resp = await (fetch(urlNull, {
+                headers: requestHeaders
+            })).catch(handleError)
+            if (resp.ok) {
+                const dataValue = await resp.json()
+                //setStatistics(dataValue.response[0])
+                //setGraphData(buildGraphData(dataValue.response[0]))
+                setNullSpeed(dataValue)
+            } else {
+                //setStatistics(`Error: ${resp.status}`)
+                //setIsCovidLoading(false)
+                console.log("in else loop")
+            }
+        }
+
         doFetchGoodSpeed()
         doFetchGreater()
         doFetchLessThenFive()
-    }, [url, setLowSpeed, setGreaterSpeed, setGoodSpeed, setIsLoading, setDetectoridsLow, setDetectoridsHigh])
+        doFetchNullSpeed()
+    }, [url, setLowSpeed, setGreaterSpeed, setGoodSpeed, setIsLoading, setDetectoridsLow, setDetectoridsHigh, setDetectoridsNull, setNullSpeed])
     /*
     const renderDashboard = () => {
         return <>
@@ -121,6 +139,16 @@ export const ChartBars = () => {
             <p>---------------------------------</p>
             <h1>{`Array: ${JSON.stringify(detectoridsHigh)}`}</h1>
         </>
+    }
+
+    const pieOptions = {
+        onClick: (e, element) => {
+            let pieArray = ["low", "great", "good"]
+            if (element.length > 0) {
+                let ind = element[0]._index;
+                alert(pieArray[ind])
+            }
+        }
     }
 
     const pieChart = () => {
@@ -149,7 +177,7 @@ export const ChartBars = () => {
             return (
                 <div>
                     <h2>Good/bad Ratio</h2>
-                    <Pie data={data}/>
+                    <Pie data={data} options={pieOptions}/>
                 </div>
             );
         }
@@ -237,7 +265,7 @@ export const ChartBars = () => {
 
     const modal = () => {
         return (
-            <Modal show={show} onHide={handleClose} className="mapModal">
+            <Modal show={show} onHide={handleClose} size="lg">
                 <Modal.Header closeButton>
                     <Modal.Title>Detector ID: {detectorId}</Modal.Title>
                 </Modal.Header>
