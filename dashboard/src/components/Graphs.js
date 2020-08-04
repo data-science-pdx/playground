@@ -151,7 +151,7 @@ export const Graphs = () => {
         }
     }
 
-    const lineOptions = {
+    const lOptions = {
         onClick: (e, element) => {
             if (element.length > 0) {
                 let ind = element[0]._index;
@@ -160,11 +160,20 @@ export const Graphs = () => {
         }
     }
 
-    const HorizontalChart = (object, header) => {
-        if (object != null) {
+    const gOptions = {
+        onClick: (e, element) => {
+            if (element.length > 0) {
+                let ind = element[0]._index;
+                alert(greaterSpeed[ind]._id.detector_id + ": " + greaterSpeed[ind].totalnumber);
+            }
+        }
+    }
+
+    const greaterHorizontalChart = () => {
+        if (greaterSpeed != null) {
             let key = []
             let value = []
-            object.forEach(i => {
+            greaterSpeed.forEach(i => {
                 key.push(i._id.detector_id)
                 value.push(i.totalnumber)
             })
@@ -183,8 +192,38 @@ export const Graphs = () => {
             }
             return (
                 <div>
-                    <h4>{header}</h4>
-                    <HorizontalBar data={data} options={lineOptions}/>
+                    <h4>Over Speed</h4>
+                    <HorizontalBar data={data} options={gOptions}/>
+                </div>
+            )
+        }
+    }
+
+    const lowHorizontalChart = () => {
+        if (lowSpeed != null) {
+            let key = []
+            let value = []
+            lowSpeed.forEach(i => {
+                key.push(i._id.detector_id)
+                value.push(i.totalnumber)
+            })
+
+            let data = {
+                labels: key,
+                datasets: [{
+                    label: "errors occurred",
+                    data: value,
+                    backgroundColor: 'rgba(99, 210, 255, 0.2)',
+                    borderColor: 'rgba(99, 210, 255, 1)',
+                    borderWidth: 1,
+                    hoverBackgroundColor: 'rgba(99, 210, 255, 0.4)',
+                    hoverBorderColor: 'rgba(99, 210, 255, 1)',
+                }]
+            }
+            return (
+                <div>
+                    <h4>Under Speed</h4>
+                    <HorizontalBar data={data} options={lOptions}/>
                 </div>
             )
         }
@@ -198,8 +237,8 @@ export const Graphs = () => {
                 <div>
                     {/*{showGraph && renderTest()}*/}
                     {showGraph && pieChart()}
-                    {showGraph && HorizontalChart(lowSpeed, "less bar")}
-                    {showGraph && HorizontalChart(greaterSpeed, "greater bar")}
+                    {showGraph && greaterHorizontalChart()}
+                    {showGraph && lowHorizontalChart()}
                 </div>
             </div>
         )

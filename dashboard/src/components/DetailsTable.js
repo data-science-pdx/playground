@@ -126,7 +126,7 @@ export const DetailsTable = () => {
 
     return (
         <div className="ui container segment">
-            {testing()}
+            {/*{testing()}*/}
 
             {renderMap()}
         </div>
