@@ -46,7 +46,7 @@ export const ChartBars = () => {
             if (resp.ok) {
                 const dataValue = await resp.json()
                 setLowSpeed(dataValue)
-                for (var i = 0; i < dataValue.length; i++) {
+                for (let i = 0; i < dataValue.length; i++) {
                     tmp.push(dataValue[i]._id.detector_id)
                     console.log(`@@@@@@@@@@@@@@@@@@@@@${detectoridsLow}`)
                     console.log(`!!!!!!!!!!!!!!!!!!!!!!${dataValue[i]._id.detector_id}`)
@@ -60,7 +60,7 @@ export const ChartBars = () => {
         }
 
         async function doFetchGreater() {
-            var tmp = []
+            let tmp = []
             let resp = await (fetch(urlTwo, {
                 headers: requestHeaders
             })).catch(handleError)
@@ -68,7 +68,7 @@ export const ChartBars = () => {
                 const dataValue = await resp.json()
                 setGreaterSpeed(dataValue)
 
-                for (var i = 0; i < dataValue.length; i++) {
+                for (let i = 0; i < dataValue.length; i++) {
                     tmp.push(dataValue[i]._id.detector_id)
                     console.log(`@@@@@@@@@@@@@@@@@@@@@${detectoridsHigh}`)
                 }
@@ -123,24 +123,6 @@ export const ChartBars = () => {
         </>
     }*/
 
-
-    const renderTest = () => {
-
-        if (lowSpeed != null) {
-            //let result = JSON.stringify(lowSpeed)
-            console.log(`testing: ${lowSpeed.length}`)
-            console.log(`testing: ${lowSpeed[0]._id.detector_id}`)
-            console.log(`@@@@@@@@@@@@@@@@@@@@@${detectoridsLow}`)
-        }
-        return <>
-            <h1>{`testing: ${JSON.stringify(lowSpeed)}`}</h1>
-            <p>-------------------------------------------</p>
-            <h1>{`testing: ${JSON.stringify(greaterSpeed)}`}</h1>
-            <p>---------------------------------</p>
-            <h1>{`Array: ${JSON.stringify(detectoridsHigh)}`}</h1>
-        </>
-    }
-
     const pieOptions = {
         onClick: (e, element) => {
             let pieArray = ["low", "great", "good"]
@@ -148,6 +130,9 @@ export const ChartBars = () => {
                 let ind = element[0]._index;
                 alert(pieArray[ind])
             }
+        },
+        legend: {
+            position: "bottom"
         }
     }
 
@@ -158,18 +143,21 @@ export const ChartBars = () => {
                 labels: [
                     'Low',
                     'Greater',
+                    'Null',
                     'Good'
                 ],
                 datasets: [{
-                    data: [lowSpeed.length, greaterSpeed.length, goodSpeed.length],
+                    data: [lowSpeed.length, greaterSpeed.length, nullSpeed.length, goodSpeed.length],
                     backgroundColor: [
                         '#FF6384',
-                        '#FFCE56',
+                        '#ffce56',
+                        '#5a5a5a',
                         '#36A2EB'
                     ],
                     hoverBackgroundColor: [
-                        '#FF6384',
-                        '#FFCE56',
+                        '#ff6384',
+                        '#ffce56',
+                        '#5a5a5a',
                         '#36A2EB'
                     ]
                 }]
@@ -190,6 +178,9 @@ export const ChartBars = () => {
                 setDetectorId(lowSpeed[ind]._id.detector_id)
                 handleShow()
             }
+        },
+        legend: {
+            position: "bottom"
         }
     }
 
@@ -200,6 +191,22 @@ export const ChartBars = () => {
                 setDetectorId(greaterSpeed[ind]._id.detector_id)
                 handleShow()
             }
+        },
+        legend: {
+            position: "bottom"
+        }
+    }
+
+    const nOptions = {
+        onClick: (e, element) => {
+            if (element.length > 0) {
+                let ind = element[0]._index;
+                setDetectorId(nullSpeed[ind]._id.detector_id)
+                handleShow()
+            }
+        },
+        legend: {
+            position: "bottom"
         }
     }
 
@@ -217,11 +224,11 @@ export const ChartBars = () => {
                 datasets: [{
                     label: "errors occurred",
                     data: value,
-                    backgroundColor: 'rgba(99, 210, 255, 0.2)',
-                    borderColor: 'rgba(99, 210, 255, 1)',
+                    backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                    borderColor: 'rgba(255, 99, 132, 1)',
                     borderWidth: 1,
-                    hoverBackgroundColor: 'rgba(99, 210, 255, 0.4)',
-                    hoverBorderColor: 'rgba(99, 210, 255, 1)',
+                    hoverBackgroundColor: 'rgba(255, 99, 132, 0.4)',
+                    hoverBorderColor: 'rgba(255, 99, 132, 1)',
                 }]
             }
             return (
@@ -247,17 +254,47 @@ export const ChartBars = () => {
                 datasets: [{
                     label: "errors occurred",
                     data: value,
-                    backgroundColor: 'rgba(99, 210, 255, 0.2)',
-                    borderColor: 'rgba(99, 210, 255, 1)',
+                    backgroundColor: 'rgba(255, 206, 86, 0.2)',
+                    borderColor: 'rgba(255, 206, 86, 1)',
                     borderWidth: 1,
-                    hoverBackgroundColor: 'rgba(99, 210, 255, 0.4)',
-                    hoverBorderColor: 'rgba(99, 210, 255, 1)',
+                    hoverBackgroundColor: 'rgba(255, 206, 86, 0.4)',
+                    hoverBorderColor: 'rgba(255, 206, 86, 1)',
                 }]
             }
             return (
                 <div>
                     <h4>Under Speed</h4>
                     <HorizontalBar data={data} options={lOptions}/>
+                </div>
+            )
+        }
+    }
+
+    const nullHorizontalChart = () => {
+        if (nullSpeed != null) {
+            let key = []
+            let value = []
+            nullSpeed.forEach(i => {
+                key.push(i._id.detector_id)
+                value.push(i.totalnumber)
+            })
+
+            let data = {
+                labels: key,
+                datasets: [{
+                    label: "errors occurred",
+                    data: value,
+                    backgroundColor: 'rgba(90,90,90, 0.2)',
+                    borderColor: 'rgb(90,90,90)',
+                    borderWidth: 1,
+                    hoverBackgroundColor: 'rgba(90,90,90, 0.4)',
+                    hoverBorderColor: 'rgb(90,90,90)',
+                }]
+            }
+            return (
+                <div>
+                    <h4>Null Speed</h4>
+                    <HorizontalBar data={data} options={nOptions}/>
                 </div>
             )
         }
@@ -273,10 +310,10 @@ export const ChartBars = () => {
                     <DetectorMap/>
                 </Modal.Body>
                 <Modal.Footer>
-                    <Button variant="secondary" onClick={handleClose}>
+                    <Button letiant="secondary" onClick={handleClose}>
                         Close
                     </Button>
-                    <Button variant="primary" onClick={handleClose}>
+                    <Button letiant="primary" onClick={handleClose}>
                         Save Changes
                     </Button>
                 </Modal.Footer>
@@ -295,6 +332,7 @@ export const ChartBars = () => {
                     {showGraph && pieChart()}
                     {showGraph && greaterHorizontalChart()}
                     {showGraph && lowHorizontalChart()}
+                    {showGraph && nullHorizontalChart()}
                 </div>
             </div>
         )
