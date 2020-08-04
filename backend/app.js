@@ -684,6 +684,37 @@ async function speedAndVolumeAndTravelTime(req,res){
   }
 }
 
+async function findSpeedNull(req,res){
+  var piplineSpeed;
+  var starttime;
+  var endtime;
+  console.log(`Before the if check the req.query, is req null, ${req==null}, is req.query null: ${req.params == null}`)
+  if (req && req.params && req.params.starttime && req.params.endtime){
+    starttime = new Date(req.params.starttime);
+    endtime = new Date(req.params.endtime);
+  }
+  console.log(`start time :${req.params.starttime}`)
+  console.log(`End time :${req.params.endtime}`)
+
+    piplineSpeed= [
+      {'$match':{"$and":[{"starttime":{'$gt':starttime,'$lt':endtime}},{"speed":null}]}},
+      {'$group':{
+        "_id":{"detector_id":"$detector_id"},
+        "totalnumber":{'$sum':1}
+      }},
+      { '$sort': { "totalnumber": -1 } }
+    ]
+  console.log(`show me the piplie ${JSON.stringify(piplineSpeed)}`)
+  try {
+    //var detectoridresult = await uniondata.aggregate(pipline1).exec();
+    var result = await highwaydata.aggregate(piplineSpeed);
+    console.log(result);
+    return result
+  } catch (err) {
+      console.log(`error occured : ${err}`);
+  }
+}
+
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
@@ -755,6 +786,10 @@ app.get("/:idlist",async(req, res,next)=>{
 
 app.get("/detailssummary/:idlist/:starttime?/:endtime?",async(req, res,next)=>{
   res.send(await speedAndVolumeAndTravelTime(req,res))
+});
+
+app.get("/null/:starttime?/:endtime?",async(req, res,next)=>{
+  res.send(await findSpeedNull(req,res))
 });
 
 app.listen(port, hostname, () => {
