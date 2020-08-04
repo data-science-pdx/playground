@@ -449,7 +449,7 @@ async function getAllStationsName(req,res){
   console.log(`piplie value ${JSON.stringify(piplineDetails)}`)
   try {
     //var detectoridresult = await uniondata.aggregate(pipline1).exec();
-    var result = await stations.find(piplineDetails);
+    var result = await highwaystations.find(piplineDetails);
     // var idTest = JSON.parse(JSON.stringify(detectoridresult));
     // console.log(idTest);
     // console.log(idTest[0]._id.detectorid);
