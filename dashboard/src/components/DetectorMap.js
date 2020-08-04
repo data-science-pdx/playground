@@ -4,6 +4,9 @@ import {Map, Marker, Popup, TileLayer} from 'react-leaflet'
 import qs from "qs"
 import './stylesheet.css'
 import ContextProvider from "./ContextProvider";
+import {Header} from "./Header";
+import {Footer} from "./Footer";
+import {Container} from "react-bootstrap";
 
 function DetectorMap(){
     const { station,setStation,greaterSpeed,lowSpeed } = useContext(Context)
@@ -108,7 +111,7 @@ function DetectorMap(){
                                 <b>Detectors Status</b>:<br/>
                                 {item.detectors.map(e =>
                                     <li key={e.detectorid}>
-                                        ID <a>{e.detectorid}</a> at lane {e.lanenumber}:
+                                        ID <a>{e.detectorid}</a> at lane {e.lanenumber}: 
                                         {e.totalGnumber &&
                                         <span className="overspeed"><b> {e.totalGnumber}</b> errors(Overspeed) occurred! </span>
                                         }
@@ -129,9 +132,11 @@ function DetectorMap(){
     }
 
     return (
-        <div>
-            {renderMap()}
-        </div>
+        <Container className="Site-content">
+            <Header/>
+                {renderMap()}
+            <Footer/>
+        </Container>
     );
 }
 
