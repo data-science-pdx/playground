@@ -1,10 +1,14 @@
-import React, { useContext, useEffect } from "react"
+import React, {useContext, useEffect, useState} from "react"
 import { Context } from "./Context"
+import { DetectorMap } from "./DetectorMap"
 import {HorizontalBar, Pie} from 'react-chartjs-2';
+import {Modal, Button} from "react-bootstrap";
 
-
-export const Graphs = () => {
-    const {startDate, endDate, detectoridsLow, setDetectoridsLow, isloading, setIsLoading, detectoridsHigh, setDetectoridsHigh, goodSpeed, setGoodSpeed, greaterSpeed, setGreaterSpeed, lowSpeed, setLowSpeed} = useContext(Context)
+export const ChartBars = () => {
+    const {startDate, endDate, detectoridsLow, setDetectoridsLow, isloading, setIsLoading, detectoridsHigh, setDetectoridsHigh, goodSpeed, setGoodSpeed, greaterSpeed, setGreaterSpeed, lowSpeed, setLowSpeed, detectorId, setDetectorId} = useContext(Context)
+    const [show, setShow] = useState(false);
+    const handleClose = () => setShow(false);
+    const handleShow = () => setShow(true);
 
     const url = `http://localhost:3001/lessthenfive/${startDate}/${endDate}`
     const urlTwo = `http://localhost:3001/greaterthen/${startDate}/${endDate}`
@@ -155,7 +159,8 @@ export const Graphs = () => {
         onClick: (e, element) => {
             if (element.length > 0) {
                 let ind = element[0]._index;
-                alert(lowSpeed[ind]._id.detector_id + ": " + lowSpeed[ind].totalnumber);
+                setDetectorId(lowSpeed[ind]._id.detector_id)
+                handleShow()
             }
         }
     }
@@ -164,7 +169,8 @@ export const Graphs = () => {
         onClick: (e, element) => {
             if (element.length > 0) {
                 let ind = element[0]._index;
-                alert(greaterSpeed[ind]._id.detector_id + ": " + greaterSpeed[ind].totalnumber);
+                setDetectorId(greaterSpeed[ind]._id.detector_id)
+                handleShow()
             }
         }
     }
@@ -229,6 +235,27 @@ export const Graphs = () => {
         }
     }
 
+    const modal = () => {
+        return (
+            <Modal show={show} onHide={handleClose} className="mapModal">
+                <Modal.Header closeButton>
+                    <Modal.Title>Detector ID: {detectorId}</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    <DetectorMap/>
+                </Modal.Body>
+                <Modal.Footer>
+                    <Button variant="secondary" onClick={handleClose}>
+                        Close
+                    </Button>
+                    <Button variant="primary" onClick={handleClose}>
+                        Save Changes
+                    </Button>
+                </Modal.Footer>
+            </Modal>
+        )
+    }
+
     const render = () => {
         //let showCovidResults = !isCovidLoading
         let showGraph = !isloading
@@ -236,6 +263,7 @@ export const Graphs = () => {
             <div className="ui container my-5">
                 <div>
                     {/*{showGraph && renderTest()}*/}
+                    {modal()}
                     {showGraph && pieChart()}
                     {showGraph && greaterHorizontalChart()}
                     {showGraph && lowHorizontalChart()}

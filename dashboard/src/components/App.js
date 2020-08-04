@@ -4,10 +4,10 @@ import ContextProvider from "./ContextProvider"
 import { Context } from "./Context"
 import {DateTest} from "./DateTest"
 import {Calendar} from "./Calendar"
-import {Graphs} from "./Graphs"
+import {ChartBars} from "./ChartBars"
 import LowDetectorList from "./LowDetectorList"
 import HighDetectorList from "./HighDetectorList"
-import {DetailsTable} from "./DetailsTable"
+import {DetailedMap} from "./DetailedMap"
 import {Header} from  "./Header"
 import {Footer} from "./Footer";
 
@@ -17,13 +17,13 @@ function App(){
             <ContextProvider>
                 <Header/>
                 <section id="Date"><Calendar/></section>
-                <DateTest/>
-                <section id="Pie"><Graphs/></section>
-                <section id="Table">
+                <DateTest/><hr className="my-5"/>
+                <section id="Map" ><DetailedMap/></section><hr className="my-5"/>
+                <section id="Pie"><ChartBars/></section><hr className="my-5"/>
+                {/*<section id="Table">
                     <LowDetectorList/>
                     <HighDetectorList/>
-                </section>
-                <section id="Map" ><DetailsTable/></section>
+                </section>*/}
                 <Footer/>
             </ContextProvider>
         </Container>
