@@ -25,3 +25,31 @@ body {
 .working {
     color: green;
 }
+
+h3{
+    text-align: center;
+    font-size: xx-large;
+    color: rgb(0, 0, 180);
+    font-weight: bold;
+}
+
+h2{
+    text-align: center;
+    font-weight: bold;
+    color: rgb(0, 0, 180);
+}
+h5{
+    text-align: center;
+    font-weight: bold;
+}
+h6{
+    text-align: center;
+}
+.pie-chart{
+    border: double;
+    background-color: cornsilk;
+    margin: 5px;
+}
+.center{
+    text-align: center;
+}

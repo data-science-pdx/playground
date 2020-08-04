@@ -147,9 +147,11 @@ export const ChartBars = () => {
                 }]
             }
             return (
-                <div>
-                    <h2>Good/bad Ratio</h2>
+                <div class="col-6 pie-chart">
+                    <br></br>
+                    <h5>Good/bad Ratio</h5>
                     <Pie data={data}/>
+                    <br></br>
                 </div>
             );
         }
@@ -265,7 +267,10 @@ export const ChartBars = () => {
                     {/*{showGraph && renderTest()}*/}
                     {modal()}
                     {showGraph && pieChart()}
+                    <hr className="my-5"/>
+                    <h3>Malfunction Detector Data</h3>
                     {showGraph && greaterHorizontalChart()}
+                    <br></br>
                     {showGraph && lowHorizontalChart()}
                 </div>
             </div>

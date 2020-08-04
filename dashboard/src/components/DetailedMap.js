@@ -101,19 +101,20 @@ export const DetailedMap = () => {
                                 <b>Highway ID</b>: {item.highwayid}<br/>
                                 <b>Milepost</b>: {item.milepost}<br/>
                                 <b>Length</b>: {item.length} mi<br/><hr/>
-                                <b>Detectors Status</b>:<br/>
+                                <b>Detectors Status</b>
                                 {item.detectors.map(e =>
                                     <li key={e.detectorid}>
                                         ID <a>{e.detectorid}</a> at lane {e.lanenumber}:
                                         {e.totalGnumber &&
-                                            <span className="overspeed"><b> {e.totalGnumber}</b> errors(Overspeed) occurred! </span>
+                                        <span className="overspeed"> <b> {e.totalGnumber} </b> Overspeed! </span>
                                         }
                                         {e.totalLnumber &&
-                                        <span className="underspeed"><b> {e.totalLnumber}</b> errors(Underspeed) occurred! </span>
+                                        <span className="underspeed"> <b> {e.totalLnumber} </b> Underspeed! </span>
                                         }
                                         {(!e.totalGnumber && !e.totalLnumber)&&
-                                            <span className="working"> up</span>
+                                            <span className="working"> Normal Status </span>
                                         }
+                                        <br></br>
                                     </li>
                                 )}
                             </Popup>
@@ -126,6 +127,8 @@ export const DetailedMap = () => {
 
     return (
         <div className="ui container segment">
+            <h3>Detector Distribution</h3>
+            <br></br>
             {/*{testing()}*/}
 
             {renderMap()}
