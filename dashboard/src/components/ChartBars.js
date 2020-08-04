@@ -3,7 +3,7 @@ import { Context } from "./Context"
 import {HorizontalBar, Pie} from 'react-chartjs-2';
 
 
-export const Graphs = () => {
+export const ChartBars = () => {
     const {startDate, endDate, detectoridsLow, setDetectoridsLow, isloading, setIsLoading, detectoridsHigh, setDetectoridsHigh, goodSpeed, setGoodSpeed, greaterSpeed, setGreaterSpeed, lowSpeed, setLowSpeed, detectorId, setDetectorId} = useContext(Context)
 
     const url = `http://localhost:3001/lessthenfive/${startDate}/${endDate}`

@@ -2,7 +2,7 @@ import React, {useState, useContext} from "react";
 import {BrowserRouter as Router, Switch, Route, Link} from "react-router-dom"
 import ContextProvider from "./ContextProvider"
 import Body from "./Body";
-import Detector from "./Detector";
+import DetectorMap from "./DetectorMap";
 
 function App(){
     return (
@@ -10,7 +10,7 @@ function App(){
             <ContextProvider>
                 <Switch>
                     <Route exact path="/" component={Body}/>
-                    <Route path="/detector" component={Detector}/>
+                    <Route path="/detector" component={DetectorMap}/>
                 </Switch>
             </ContextProvider>
         </Router>

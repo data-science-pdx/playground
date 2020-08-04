@@ -1,15 +1,19 @@
 import React, { useContext,useEffect, useState} from "react";
 import { Context } from "./Context"
 import {Map, Marker, Popup, TileLayer} from 'react-leaflet'
+import qs from "qs"
 import './stylesheet.css'
+import ContextProvider from "./ContextProvider";
 
-export const DetailsTable = () => {
-    const { detectoridsLow,detectoridsHigh,station,setStation,greaterSpeed,lowSpeed } = useContext(Context)
+function DetectorMap(){
+    const { station,setStation,greaterSpeed,lowSpeed } = useContext(Context)
     const [runMap, setRunMap] = useState(false)
 
-    let idlist = []
-    idlist=detectoridsHigh.concat(detectoridsLow)
-    console.log(`#############################${idlist}`)
+    let values = qs.parse(window.location.search);
+    console.log(values, window.location.search)
+
+
+    let idlist = values["?id"]
     //const url = `http://localhost:3001/100555`
 
     let url = `http://localhost:3001/${idlist}`
@@ -106,13 +110,13 @@ export const DetailsTable = () => {
                                     <li key={e.detectorid}>
                                         ID <a>{e.detectorid}</a> at lane {e.lanenumber}:
                                         {e.totalGnumber &&
-                                            <span className="overspeed"><b> {e.totalGnumber}</b> errors(Overspeed) occurred! </span>
+                                        <span className="overspeed"><b> {e.totalGnumber}</b> errors(Overspeed) occurred! </span>
                                         }
                                         {e.totalLnumber &&
                                         <span className="underspeed"><b> {e.totalLnumber}</b> errors(Underspeed) occurred! </span>
                                         }
                                         {(!e.totalGnumber && !e.totalLnumber)&&
-                                            <span className="working"> up</span>
+                                        <span className="working"> up</span>
                                         }
                                     </li>
                                 )}
@@ -125,11 +129,10 @@ export const DetailsTable = () => {
     }
 
     return (
-        <div className="ui container segment">
-            {/*{testing()}*/}
-
+        <div>
             {renderMap()}
         </div>
-    )
-
+    );
 }
+
+export default DetectorMap;

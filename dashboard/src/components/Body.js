@@ -1,12 +1,12 @@
 import React, {useState, useContext} from "react";
 import {Container} from "react-bootstrap";
 import { Context } from "./Context"
-import {DateTest} from "./DateTest"
+import {CalendarTest} from "./CalendarTest"
 import {Calendar} from "./Calendar"
-import {Graphs} from "./Graphs"
+import {ChartBars} from "./ChartBars"
 import LowDetectorList from "./LowDetectorList"
 import HighDetectorList from "./HighDetectorList"
-import {DetailsTable} from "./DetailsTable"
+import {DetailedMap} from "./DetailedMap"
 import {Header} from  "./Header"
 import {Footer} from "./Footer";
 
@@ -15,13 +15,13 @@ function Body(){
         <Container className="Site-content">
             <Header/>
             <section id="Date"><Calendar/></section>
-            <DateTest/>
-            <section id="Pie"><Graphs/></section>
+            <CalendarTest/>
+            <section id="Pie"><ChartBars/></section>
             <section id="Table">
                 <LowDetectorList/>
                 <HighDetectorList/>
             </section>
-            <section id="Map" ><DetailsTable/></section>
+            <section id="Map" ><DetailedMap/></section>
             <Footer/>
         </Container>
     );
