@@ -4,7 +4,7 @@ import {HorizontalBar, Pie} from 'react-chartjs-2';
 
 
 export const Graphs = () => {
-    const {startDate, endDate, detectoridsLow, setDetectoridsLow, isloading, setIsLoading, detectoridsHigh, setDetectoridsHigh, goodSpeed, setGoodSpeed, greaterSpeed, setGreaterSpeed, lowSpeed, setLowSpeed} = useContext(Context)
+    const {startDate, endDate, detectoridsLow, setDetectoridsLow, isloading, setIsLoading, detectoridsHigh, setDetectoridsHigh, goodSpeed, setGoodSpeed, greaterSpeed, setGreaterSpeed, lowSpeed, setLowSpeed, detectorId, setDetectorId} = useContext(Context)
 
     const url = `http://localhost:3001/lessthenfive/${startDate}/${endDate}`
     const urlTwo = `http://localhost:3001/greaterthen/${startDate}/${endDate}`
@@ -155,7 +155,8 @@ export const Graphs = () => {
         onClick: (e, element) => {
             if (element.length > 0) {
                 let ind = element[0]._index;
-                alert(lowSpeed[ind]._id.detector_id + ": " + lowSpeed[ind].totalnumber);
+                setDetectorId(lowSpeed[ind]._id.detector_id)
+                window.location = "detector?id=" + lowSpeed[ind]._id.detector_id;
             }
         }
     }
@@ -164,7 +165,8 @@ export const Graphs = () => {
         onClick: (e, element) => {
             if (element.length > 0) {
                 let ind = element[0]._index;
-                alert(greaterSpeed[ind]._id.detector_id + ": " + greaterSpeed[ind].totalnumber);
+                setDetectorId(greaterSpeed[ind]._id.detector_id)
+                window.location = "detector?id=" + greaterSpeed[ind]._id.detector_id;
             }
         }
     }

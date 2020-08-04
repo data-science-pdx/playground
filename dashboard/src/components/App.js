@@ -1,32 +1,19 @@
 import React, {useState, useContext} from "react";
-import {Container} from "react-bootstrap";
+import {BrowserRouter as Router, Switch, Route, Link} from "react-router-dom"
 import ContextProvider from "./ContextProvider"
-import { Context } from "./Context"
-import {DateTest} from "./DateTest"
-import {Calendar} from "./Calendar"
-import {Graphs} from "./Graphs"
-import LowDetectorList from "./LowDetectorList"
-import HighDetectorList from "./HighDetectorList"
-import {DetailsTable} from "./DetailsTable"
-import {Header} from  "./Header"
-import {Footer} from "./Footer";
+import Body from "./Body";
+import Detector from "./Detector";
 
 function App(){
     return (
-        <Container className="Site-content">
+        <Router>
             <ContextProvider>
-                <Header/>
-                <section id="Date"><Calendar/></section>
-                <DateTest/>
-                <section id="Pie"><Graphs/></section>
-                <section id="Table">
-                    <LowDetectorList/>
-                    <HighDetectorList/>
-                </section>
-                <section id="Map" ><DetailsTable/></section>
-                <Footer/>
+                <Switch>
+                    <Route exact path="/" component={Body}/>
+                    <Route path="/detector" component={Detector}/>
+                </Switch>
             </ContextProvider>
-        </Container>
+        </Router>
     );
 }
 
