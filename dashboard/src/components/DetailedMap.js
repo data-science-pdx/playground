@@ -3,7 +3,7 @@ import { Context } from "./Context"
 import {Map, Marker, Popup, TileLayer} from 'react-leaflet'
 import './stylesheet.css'
 
-export const DetailsTable = () => {
+export const DetailedMap = () => {
     const { detectoridsLow,detectoridsHigh,station,setStation,greaterSpeed,lowSpeed } = useContext(Context)
     const [runMap, setRunMap] = useState(false)
 

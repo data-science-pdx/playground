@@ -4,7 +4,7 @@ import { DetectorMap } from "./DetectorMap"
 import {HorizontalBar, Pie} from 'react-chartjs-2';
 import {Modal, Button} from "react-bootstrap";
 
-export const Graphs = () => {
+export const ChartBars = () => {
     const {startDate, endDate, detectoridsLow, setDetectoridsLow, isloading, setIsLoading, detectoridsHigh, setDetectoridsHigh, goodSpeed, setGoodSpeed, greaterSpeed, setGreaterSpeed, lowSpeed, setLowSpeed, detectorId, setDetectorId} = useContext(Context)
     const [show, setShow] = useState(false);
     const handleClose = () => setShow(false);
@@ -237,7 +237,7 @@ export const Graphs = () => {
 
     const modal = () => {
         return (
-            <Modal show={show} onHide={handleClose}>
+            <Modal show={show} onHide={handleClose} className="mapModal">
                 <Modal.Header closeButton>
                     <Modal.Title>Detector ID: {detectorId}</Modal.Title>
                 </Modal.Header>
