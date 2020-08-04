@@ -540,7 +540,7 @@ async function findSpeedLess(req,res){
   console.log(`End time :${req.params.endtime}`)
 
   piplineSpeed= [
-    {'$match':{"$and":[{"starttime":{'$gt':starttime,'$lt':endtime}},{"speed":{'$lt':5}}]}},
+    {'$match':{"$and":[{"starttime":{'$gte':starttime,'$lt':endtime}},{"speed":{'$lt':5}}]}},
     {'$group':{
       "_id":{"detector_id":"$detector_id"},
       "totalnumber":{'$sum':1}
@@ -574,7 +574,7 @@ async function findSpeedGreater(req,res){
   console.log(`End time :${req.params.endtime}`)
 
   piplineSpeed= [
-    {'$match':{"$and":[{"starttime":{'$gt':starttime,'$lt':endtime}},{"speed":{'$gt':80}}]}},
+    {'$match':{"$and":[{"starttime":{'$gte':starttime,'$lt':endtime}},{"speed":{'$gt':80}}]}},
     {'$group':{
       "_id":{"detector_id":"$detector_id"},
       "totalnumber":{'$sum':1}
@@ -605,7 +605,7 @@ async function findGoodSpeed(req,res){
   console.log(`End time :${req.params.endtime}`)
 
   piplineSpeed= [
-    {'$match':{"$and":[{"starttime":{'$gt':starttime,'$lt':endtime}},{"speed":{'$lt':80,'$gt':5}}]}},
+    {'$match':{"$and":[{"starttime":{'$gte':starttime,'$lt':endtime}},{"speed":{'$lt':80,'$gt':5}}]}},
     {'$group':{
       "_id":{"detector_id":"$detector_id"},
       "totalnumber":{'$sum':1}
@@ -660,7 +660,7 @@ async function speedAndVolumeAndTravelTime(req,res){
   
   pipline= [
       {'$match':{"detector_id":{"$in":idlist}}},
-      {'$match':{"starttime":{'$gt':starttime,'$lt':endtime}}},
+      {'$match':{"starttime":{'$gte':starttime,'$lt':endtime}}},
       {'$group':{
           "_id":{"detector_id":"$detector_id"},
           "totalvolume":{'$sum':"$volume"},
@@ -697,7 +697,7 @@ async function findSpeedNull(req,res){
   console.log(`End time :${req.params.endtime}`)
 
     piplineSpeed= [
-      {'$match':{"$and":[{"starttime":{'$gt':starttime,'$lt':endtime}},{"speed":null}]}},
+      {'$match':{"$and":[{"starttime":{'$gte':starttime,'$lt':endtime}},{"speed":null}]}},
       {'$group':{
         "_id":{"detector_id":"$detector_id"},
         "totalnumber":{'$sum':1}
@@ -708,6 +708,40 @@ async function findSpeedNull(req,res){
   try {
     //var detectoridresult = await uniondata.aggregate(pipline1).exec();
     var result = await highwaydata.aggregate(piplineSpeed);
+    console.log(result);
+    return result
+  } catch (err) {
+      console.log(`error occured : ${err}`);
+  }
+}
+
+
+async function speedDaily(req,res){
+  var pipline;
+  var starttime;
+  var endtime;
+  var idlist = req.params.idlist.split(",").map(x=>Number(x));
+  console.log(`Before the if check the req.query, is req null, ${req==null}, is req.query null: ${req.params == null}`)
+  if (req && req.params && req.params.starttime && req.params.endtime){
+    starttime = new Date(req.params.starttime);
+    endtime = new Date(req.params.endtime);
+  }
+  console.log(`start time :${starttime}`)
+  console.log(`idlist :${idlist}`)
+  
+  pipline= [
+      {'$match':{"detector_id":{"$in":idlist}}},
+      {'$match':{"starttime":{'$gte':starttime,'$lt':endtime}}}
+  ]
+  //detectorId(pipline1);
+  console.log(`piplie : ${JSON.stringify(pipline)}`)
+
+  try {
+    //var detectoridresult = await uniondata.aggregate(pipline1).exec();
+    var result = await highwaydata.aggregate(pipline);
+    // var idTest = JSON.parse(JSON.stringify(detectoridresult));
+    // console.log(idTest);
+    // console.log(idTest[0]._id.detectorid);
     console.log(result);
     return result
   } catch (err) {
@@ -790,6 +824,10 @@ app.get("/detailssummary/:idlist/:starttime?/:endtime?",async(req, res,next)=>{
 
 app.get("/null/:starttime?/:endtime?",async(req, res,next)=>{
   res.send(await findSpeedNull(req,res))
+});
+
+app.get("/speeddaily/:idlist/:starttime?/:endtime?",async(req, res,next)=>{
+  res.send(await speedDaily(req,res))
 });
 
 app.listen(port, hostname, () => {
