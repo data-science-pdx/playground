@@ -211,9 +211,9 @@ export const ChartBars = () => {
                                 <Nav.Item>
                                     <Nav.Link className="linkText" eventKey="#AllDetails" onClick={() => setDisplayCard(1)}>Good/Bad Ratio</Nav.Link>
                                 </Nav.Item>
-                                <Nav.Item>
+                                {/* <Nav.Item>
                                     <Nav.Link className="linkText" eventKey="#GoodBadRatio" onClick={() => setDisplayCard(2)}>All Details</Nav.Link>
-                                </Nav.Item>
+                                </Nav.Item> */}
                                 <Nav.Item>
                                     <Nav.Link className="linkText" eventKey="#GreaterLowNullRatio" onClick={() => setDisplayCard(3)}>Greater/Low/Null Ratio</Nav.Link>
                                 </Nav.Item>
@@ -223,9 +223,9 @@ export const ChartBars = () => {
                             {displayCard===1 &&
                                 <Doughnut data={data2} options={pieOptions}/>
                             }
-                            {displayCard===2 &&
+                            {/* {displayCard===2 &&
                                 <Doughnut data={data} options={pieOptions}/>
-                            }
+                            } */}
                             {displayCard===3 &&
                                 <Doughnut data={data3} options={pieOptions}/>
                             }
