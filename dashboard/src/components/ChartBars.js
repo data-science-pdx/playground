@@ -96,6 +96,7 @@ export const ChartBars = () => {
         }
 
         async function doFetchNullSpeed() {
+            let tmp = []
             let resp = await (fetch(urlNull, {
                 headers: requestHeaders
             })).catch(handleError)
@@ -103,6 +104,12 @@ export const ChartBars = () => {
                 const dataValue = await resp.json()
                 //setStatistics(dataValue.response[0])
                 //setGraphData(buildGraphData(dataValue.response[0]))
+                for (let i = 0; i < dataValue.length; i++) {
+                    tmp.push(dataValue[i]._id.detector_id)
+                    console.log(`@@@@@@@@@@@@@@@@@@@@@${detectoridsLow}`)
+                    console.log(`!!!!!!!!!!!!!!!!!!!!!!${dataValue[i]._id.detector_id}`)
+                }
+                setDetectoridsNull(detectoridsNull.concat(tmp))
                 setNullSpeed(dataValue)
             } else {
                 //setStatistics(`Error: ${resp.status}`)
@@ -282,11 +289,11 @@ export const ChartBars = () => {
                 datasets: [{
                     label: "errors occurred",
                     data: value,
-                    backgroundColor: 'rgba(255, 99, 132, 0.2)',
-                    borderColor: 'rgba(255, 99, 132, 1)',
+                    backgroundColor: 'rgba(255, 206, 86, 0.2)',
+                    borderColor: 'rgb(255, 206, 86, 1)',
                     borderWidth: 1,
-                    hoverBackgroundColor: 'rgba(255, 99, 132, 0.4)',
-                    hoverBorderColor: 'rgba(255, 99, 132, 1)',
+                    hoverBackgroundColor: 'rgba(255, 206, 86, 0.4)',
+                    hoverBorderColor: 'rgba(255, 206, 86, 1)',
                 }]
             }
             return (
@@ -312,11 +319,11 @@ export const ChartBars = () => {
                 datasets: [{
                     label: "errors occurred",
                     data: value,
-                    backgroundColor: 'rgba(255, 206, 86, 0.2)',
-                    borderColor: 'rgba(255, 206, 86, 1)',
+                    backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                    borderColor: 'rgba(255, 99, 132, 1)',
                     borderWidth: 1,
-                    hoverBackgroundColor: 'rgba(255, 206, 86, 0.4)',
-                    hoverBorderColor: 'rgba(255, 206, 86, 1)',
+                    hoverBackgroundColor: 'rgba(255, 99, 132, 0.4)',
+                    hoverBorderColor: 'rgba(255, 99, 132, 1)',
                 }]
             }
             return (
@@ -370,9 +377,6 @@ export const ChartBars = () => {
                 <Modal.Footer>
                     <Button letiant="secondary" onClick={handleClose}>
                         Close
-                    </Button>
-                    <Button letiant="primary" onClick={handleClose}>
-                        Save Changes
                     </Button>
                 </Modal.Footer>
             </Modal>

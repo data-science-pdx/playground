@@ -14,12 +14,16 @@ body {
     width: 100%;
 }
 
-.underspeed {
-    color: red;
+.underSpeed {
+    color: rgb(255, 0, 0);
 }
 
-.overspeed {
-    color: orangered;
+.overSpeed {
+    color: rgb(255, 153, 0);
+}
+
+.nullSpeed {
+    color: rgb(126, 126, 126);
 }
 
 .working {

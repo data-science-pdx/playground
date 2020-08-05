@@ -2,11 +2,19 @@ import React, { useContext,useEffect, useState} from "react";
 import { Context } from "./Context"
 import {Map, Marker, Popup, TileLayer} from 'react-leaflet'
 import './stylesheet.css'
+import {Badge, Button, Modal} from "react-bootstrap";
+import {LineCharts} from "./LineCharts";
 
 export const DetectorMap = () => {
-    const { detectorId, greaterSpeed,lowSpeed } = useContext(Context)
+    const { detectorId, greaterSpeed, lowSpeed, nullSpeed, setDetectorId, startDate, endDate } = useContext(Context)
     const [runMap, setRunMap] = useState(false)
     const [station, setStation] = useState("")
+    const [show, setShow] = useState(false);
+    const handleClose = () => setShow(false);
+    const handleShow = (x) => {
+        setShow(true);
+        setDetectorId(x)
+    }
 
     let idlist = detectorId
     console.log(`#############################${idlist}`)
@@ -53,6 +61,26 @@ export const DetectorMap = () => {
         doFetchStationInfo()
     },[url,setStation])
 
+    const modal = () => {
+        let url = `http://localhost:3001/speeddaily/${detectorId}/${startDate}/${endDate}`
+        return (
+            <Modal show={show} onHide={handleClose} size="lg">
+                <Modal.Header closeButton>
+                    <Modal.Title>Detector ID: {detectorId}</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    <LineCharts/>
+                </Modal.Body>
+                <a className="m-5" href={url} rel="noopener noreferrer" target="_blank">Check Raw JSON</a>
+                <Modal.Footer>
+                    <Button letiant="secondary" onClick={handleClose}>
+                        Close
+                    </Button>
+                </Modal.Footer>
+            </Modal>
+        )
+    }
+
     const renderMap = () => {
         let portland = []
         if (station) {
@@ -80,6 +108,17 @@ export const DetectorMap = () => {
                 })
             })
         }
+        if(station && nullSpeed){
+            nullSpeed.map(d_item => {
+                station.map(s_item => {
+                    s_item.detectors.map(sd_item => {
+                        if(sd_item.detectorid === d_item._id.detector_id){
+                            sd_item.totalNnumber = d_item.totalnumber
+                        }
+                    })
+                })
+            })
+        }
         console.log(station)
 
         if(runMap) {
@@ -97,14 +136,17 @@ export const DetectorMap = () => {
                                 <b>Detectors Status</b>:<br/>
                                 {item.detectors.map(e =>
                                     <li key={e.detectorid}>
-                                        ID <a>{e.detectorid}</a> at lane {e.lanenumber}:
+                                        ID <Badge variant="primary" onClick={()=>{handleShow(e.detectorid)}}>{e.detectorid}</Badge> at lane {e.lanenumber}:
                                         {e.totalGnumber &&
-                                        <span className="overspeed"><b> {e.totalGnumber}</b> errors(Overspeed) occurred! </span>
+                                        <span className="overSpeed"><b> {e.totalGnumber}</b> errors(Overspeed) occurred! </span>
                                         }
                                         {e.totalLnumber &&
-                                        <span className="underspeed"><b> {e.totalLnumber}</b> errors(Underspeed) occurred! </span>
+                                        <span className="underSpeed"><b> {e.totalLnumber}</b> errors(Underspeed) occurred! </span>
                                         }
-                                        {(!e.totalGnumber && !e.totalLnumber)&&
+                                        {e.totalNnumber &&
+                                        <span className="nullSpeed"><b> {e.totalNnumber}</b> errors(NullSpeed) occurred! </span>
+                                        }
+                                        {(!e.totalGnumber && !e.totalLnumber && !e.totalNnumber)&&
                                         <span className="working"> up</span>
                                         }
                                     </li>
@@ -119,8 +161,7 @@ export const DetectorMap = () => {
 
     return (
         <div className="ui container segment">
-            {/*{testing()}*/}
-
+            {modal()}
             {renderMap()}
         </div>
     )

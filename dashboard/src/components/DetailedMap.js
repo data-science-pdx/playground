@@ -7,7 +7,7 @@ import {DetectorMap} from "./DetectorMap";
 import {LineCharts} from "./LineCharts";
 
 export const DetailedMap = () => {
-    const { detectoridsLow,detectoridsHigh,station,setStation,greaterSpeed,lowSpeed,detectorId, setDetectorId, startDate, endDate } = useContext(Context)
+    const { detectoridsLow,detectoridsHigh,detectoridsNull, station,setStation,greaterSpeed,lowSpeed, nullSpeed, detectorId, setDetectorId, startDate, endDate } = useContext(Context)
     const [runMap, setRunMap] = useState(false)
     const [show, setShow] = useState(false);
     const handleClose = () => setShow(false);
@@ -18,6 +18,7 @@ export const DetailedMap = () => {
 
     let idlist = []
     idlist=detectoridsHigh.concat(detectoridsLow)
+    idlist=idlist.concat(detectoridsNull)
     console.log(`#############################${idlist}`)
     //const url = `http://localhost:3001/100555`
 
@@ -116,6 +117,17 @@ export const DetailedMap = () => {
                 })
             })
         }
+        if(station && nullSpeed){
+            nullSpeed.map(d_item => {
+                station.map(s_item => {
+                    s_item.detectors.map(sd_item => {
+                        if(sd_item.detectorid === d_item._id.detector_id){
+                            sd_item.totalNnumber = d_item.totalnumber
+                        }
+                    })
+                })
+            })
+        }
         console.log(station)
 
         if(runMap) {
@@ -135,13 +147,16 @@ export const DetailedMap = () => {
                                     <li key={e.detectorid}>
                                         ID <Badge variant="primary" onClick={()=>{handleShow(e.detectorid)}}>{e.detectorid}</Badge> at lane {e.lanenumber}:
                                         {e.totalGnumber &&
-                                            <span className="overspeed"><b> {e.totalGnumber}</b> errors(Overspeed) occurred! </span>
+                                            <span>{' '}<Badge variant="warning"><Badge variant="light">{e.totalGnumber}</Badge> OverSpeed</Badge></span>
                                         }
                                         {e.totalLnumber &&
-                                        <span className="underspeed"><b> {e.totalLnumber}</b> errors(Underspeed) occurred! </span>
+                                            <span>{' '}<Badge variant="danger"><Badge variant="light">{e.totalLnumber}</Badge> UnderSpeed</Badge></span>
                                         }
-                                        {(!e.totalGnumber && !e.totalLnumber)&&
-                                            <span className="working"> up</span>
+                                        {e.totalNnumber &&
+                                            <span>{' '}<Badge variant="secondary"><Badge variant="light">{e.totalNnumber}</Badge> NullSpeed</Badge></span>
+                                        }
+                                        {(!e.totalGnumber && !e.totalLnumber && !e.totalNnumber)&&
+                                            <span>{' '}<Badge variant="success"> up </Badge></span>
                                         }
                                     </li>
                                 )}
