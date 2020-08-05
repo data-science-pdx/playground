@@ -14,18 +14,43 @@ body {
     width: 100%;
 }
 
-.underSpeed {
-    color: rgb(255, 0, 0);
+.underspeed {
+    color: red;
 }
 
-.overSpeed {
-    color: rgb(255, 153, 0);
-}
-
-.nullSpeed {
-    color: rgb(126, 126, 126);
+.overspeed {
+    color: orangered;
 }
 
 .working {
     color: green;
+}
+
+h3{
+    text-align: center;
+    font-size: xx-large;
+    color: rgb(0, 0, 180);
+    font-weight: bold;
+}
+
+h2{
+    text-align: center;
+    font-weight: bold;
+    color: rgb(0, 0, 180);
+}
+h5{
+    text-align: center;
+    font-weight: bold;
+}
+h6{
+    text-align: center;
+}
+.pie-chart{
+    border: double;
+    background-color: cornsilk;
+    margin: 5px;
+}
+.h3{
+    text-align: center;
+    font-weight: bold;
 }

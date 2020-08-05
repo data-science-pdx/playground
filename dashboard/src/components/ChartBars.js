@@ -388,12 +388,17 @@ export const ChartBars = () => {
         let showGraph = !isloading
         return (
             <div className="ui container my-5">
+                <h3>Detector Malfunction Analysis</h3>
+                <br/>
                 <div>
                     {/*{showGraph && renderTest()}*/}
                     {modal()}
                     {showGraph && pieChart()} <hr className="my-5"/>
-                    {showGraph && greaterHorizontalChart()} <hr className="my-5"/>
-                    {showGraph && lowHorizontalChart()} <hr className="my-5"/>
+                    <h3>Detailed Malfunction Detectors</h3>
+                    {showGraph && greaterHorizontalChart()}
+                    <br/>
+                    {showGraph && lowHorizontalChart()} 
+                    <br/>
                     {showGraph && nullHorizontalChart()}
                 </div>
             </div>

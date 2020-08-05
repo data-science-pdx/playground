@@ -170,6 +170,8 @@ export const DetailedMap = () => {
 
     return (
         <div className="ui container segment">
+            <h3>Detector Distribution Map</h3>
+            <br/>
             {/*{testing()}*/}
             {modal()}
             {renderMap()}
