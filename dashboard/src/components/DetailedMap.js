@@ -2,10 +2,19 @@ import React, { useContext,useEffect, useState} from "react";
 import { Context } from "./Context"
 import {Map, Marker, Popup, TileLayer} from 'react-leaflet'
 import './stylesheet.css'
+import {Button, Modal, Badge} from "react-bootstrap";
+import {DetectorMap} from "./DetectorMap";
+import {LineCharts} from "./LineCharts";
 
 export const DetailedMap = () => {
-    const { detectoridsLow,detectoridsHigh,station,setStation,greaterSpeed,lowSpeed } = useContext(Context)
+    const { detectoridsLow,detectoridsHigh,station,setStation,greaterSpeed,lowSpeed,detectorId, setDetectorId, startDate, endDate } = useContext(Context)
     const [runMap, setRunMap] = useState(false)
+    const [show, setShow] = useState(false);
+    const handleClose = () => setShow(false);
+    const handleShow = (x) => {
+        setShow(true);
+        setDetectorId(x)
+    }
 
     let idlist = []
     idlist=detectoridsHigh.concat(detectoridsLow)
@@ -63,6 +72,26 @@ export const DetailedMap = () => {
         )
     }
 
+    const modal = () => {
+        let url = `http://localhost:3001/speeddaily/${detectorId}/${startDate}/${endDate}`
+        return (
+            <Modal show={show} onHide={handleClose} size="lg">
+                <Modal.Header closeButton>
+                    <Modal.Title>Detector ID: {detectorId}</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    <LineCharts/>
+                </Modal.Body>
+                <a className="m-5" href={url} rel="noopener noreferrer" target="_blank">Check Raw JSON</a>
+                <Modal.Footer>
+                    <Button letiant="secondary" onClick={handleClose}>
+                        Close
+                    </Button>
+                </Modal.Footer>
+            </Modal>
+        )
+    }
+
     const renderMap = () => {
         const portland = [45.5135, -122.6801]
         if(station && greaterSpeed){
@@ -104,7 +133,7 @@ export const DetailedMap = () => {
                                 <b>Detectors Status</b>:<br/>
                                 {item.detectors.map(e =>
                                     <li key={e.detectorid}>
-                                        ID <a>{e.detectorid}</a> at lane {e.lanenumber}:
+                                        ID <Badge variant="primary" onClick={()=>{handleShow(e.detectorid)}}>{e.detectorid}</Badge> at lane {e.lanenumber}:
                                         {e.totalGnumber &&
                                             <span className="overspeed"><b> {e.totalGnumber}</b> errors(Overspeed) occurred! </span>
                                         }
@@ -127,7 +156,7 @@ export const DetailedMap = () => {
     return (
         <div className="ui container segment">
             {/*{testing()}*/}
-
+            {modal()}
             {renderMap()}
         </div>
     )
