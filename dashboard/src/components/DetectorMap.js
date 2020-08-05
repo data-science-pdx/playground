@@ -4,8 +4,9 @@ import {Map, Marker, Popup, TileLayer} from 'react-leaflet'
 import './stylesheet.css'
 
 export const DetectorMap = () => {
-    const { detectorId,station,setStation,greaterSpeed,lowSpeed } = useContext(Context)
+    const { detectorId, greaterSpeed,lowSpeed } = useContext(Context)
     const [runMap, setRunMap] = useState(false)
+    const [station, setStation] = useState("")
 
     let idlist = detectorId
     console.log(`#############################${idlist}`)
@@ -53,7 +54,10 @@ export const DetectorMap = () => {
     },[url,setStation])
 
     const renderMap = () => {
-        const portland = [station[0].lon, station[0].lat]
+        let portland = []
+        if (station) {
+            portland = [station[0].lon, station[0].lat]
+        }
         if(station && greaterSpeed){
             greaterSpeed.map(d_item => {
                 station.map(s_item => {
