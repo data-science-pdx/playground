@@ -1,7 +1,7 @@
 import React, {useContext, useEffect, useState} from "react"
 import { Context } from "./Context"
 import { DetectorMap } from "./DetectorMap"
-import {HorizontalBar, Pie} from 'react-chartjs-2';
+import {HorizontalBar, Doughnut} from 'react-chartjs-2';
 import {Modal, Button, Card, Nav} from "react-bootstrap";
 
 export const ChartBars = () => {
@@ -202,25 +202,25 @@ export const ChartBars = () => {
                         <Card.Header>
                             <Nav variant="tabs" defaultActiveKey="#AllDetails">
                                 <Nav.Item>
-                                    <Nav.Link className=".text-white" eventKey="#AllDetails" onClick={() => setDisplayCard(1)}>All Details</Nav.Link>
+                                    <Nav.Link className="linkText" eventKey="#AllDetails" onClick={() => setDisplayCard(1)}>Good/Bad Ratio</Nav.Link>
                                 </Nav.Item>
                                 <Nav.Item>
-                                    <Nav.Link className=".text-white" eventKey="#GoodBadRatio" onClick={() => setDisplayCard(2)}>Good/Bad Ratio</Nav.Link>
+                                    <Nav.Link className="linkText" eventKey="#GoodBadRatio" onClick={() => setDisplayCard(2)}>All Details</Nav.Link>
                                 </Nav.Item>
                                 <Nav.Item>
-                                    <Nav.Link className=".text-white" eventKey="#GreaterLowNullRatio" onClick={() => setDisplayCard(3)}>Greater/Low/Null Ratio</Nav.Link>
+                                    <Nav.Link className="linkText" eventKey="#GreaterLowNullRatio" onClick={() => setDisplayCard(3)}>Greater/Low/Null Ratio</Nav.Link>
                                 </Nav.Item>
                             </Nav>
                         </Card.Header>
                         <div className="p-5">
                             {displayCard===1 &&
-                                <Pie data={data2} options={pieOptions}/>
+                                <Doughnut data={data2} options={pieOptions}/>
                             }
                             {displayCard===2 &&
-                                <Pie data={data} options={pieOptions}/>
+                                <Doughnut data={data} options={pieOptions}/>
                             }
                             {displayCard===3 &&
-                                <Pie data={data3} options={pieOptions}/>
+                                <Doughnut data={data3} options={pieOptions}/>
                             }
                         </div>
                     </Card>

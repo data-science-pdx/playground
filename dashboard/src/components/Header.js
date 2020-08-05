@@ -13,7 +13,6 @@ export const Header = () => {
                 <Nav className="mr-auto">
                     <Nav.Link href="#Date">Date</Nav.Link>
                     <Nav.Link href="#Pie">Pie</Nav.Link>
-                    <Nav.Link href="#Table">Table</Nav.Link>
                     <Nav.Link href="#Map">Map</Nav.Link>
                 </Nav>
             </Navbar.Collapse>
