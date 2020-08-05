@@ -2,11 +2,12 @@ import React, {useContext, useEffect, useState} from "react"
 import { Context } from "./Context"
 import { DetectorMap } from "./DetectorMap"
 import {HorizontalBar, Pie} from 'react-chartjs-2';
-import {Modal, Button} from "react-bootstrap";
+import {Modal, Button, Card, Nav} from "react-bootstrap";
 
 export const ChartBars = () => {
     const {startDate, endDate, detectoridsLow, setDetectoridsLow, isloading, setIsLoading, detectoridsHigh, setDetectoridsHigh, detectoridsNull, setDetectoridsNull, goodSpeed, setGoodSpeed, greaterSpeed, setGreaterSpeed, nullSpeed, setNullSpeed, lowSpeed, setLowSpeed, detectorId, setDetectorId} = useContext(Context)
     const [show, setShow] = useState(false);
+    const [displayCard, setDisplayCard] = useState(1);
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
 
@@ -124,13 +125,6 @@ export const ChartBars = () => {
     }*/
 
     const pieOptions = {
-        onClick: (e, element) => {
-            let pieArray = ["low", "great", "good"]
-            if (element.length > 0) {
-                let ind = element[0]._index;
-                alert(pieArray[ind])
-            }
-        },
         legend: {
             position: "bottom"
         }
@@ -162,10 +156,74 @@ export const ChartBars = () => {
                     ]
                 }]
             }
+
+            let data2 = {
+                labels: [
+                    'bad',
+                    'Good'
+                ],
+                datasets: [{
+                    data: [lowSpeed.length + greaterSpeed.length + nullSpeed.length, goodSpeed.length],
+                    backgroundColor: [
+                        '#FF6384',
+                        '#36A2EB'
+                    ],
+                    hoverBackgroundColor: [
+                        '#ff6384',
+                        '#36A2EB'
+                    ]
+                }]
+            }
+
+            let data3 = {
+                labels: [
+                    'Low',
+                    'Greater',
+                    'Null'
+                ],
+                datasets: [{
+                    data: [lowSpeed.length, greaterSpeed.length, nullSpeed.length],
+                    backgroundColor: [
+                        '#ff6384',
+                        '#ffce56',
+                        '#5a5a5a',
+                    ],
+                    hoverBackgroundColor: [
+                        '#ff6384',
+                        '#ffce56',
+                        '#5a5a5a',
+                    ]
+                }]
+            }
+
             return (
                 <div>
-                    <h2>Good/bad Ratio</h2>
-                    <Pie data={data} options={pieOptions}/>
+                    <Card>
+                        <Card.Header>
+                            <Nav variant="tabs" defaultActiveKey="#AllDetails">
+                                <Nav.Item>
+                                    <Nav.Link className=".text-white" eventKey="#AllDetails" onClick={() => setDisplayCard(1)}>All Details</Nav.Link>
+                                </Nav.Item>
+                                <Nav.Item>
+                                    <Nav.Link className=".text-white" eventKey="#GoodBadRatio" onClick={() => setDisplayCard(2)}>Good/Bad Ratio</Nav.Link>
+                                </Nav.Item>
+                                <Nav.Item>
+                                    <Nav.Link className=".text-white" eventKey="#GreaterLowNullRatio" onClick={() => setDisplayCard(3)}>Greater/Low/Null Ratio</Nav.Link>
+                                </Nav.Item>
+                            </Nav>
+                        </Card.Header>
+                        <div className="p-5">
+                            {displayCard===1 &&
+                                <Pie data={data2} options={pieOptions}/>
+                            }
+                            {displayCard===2 &&
+                                <Pie data={data} options={pieOptions}/>
+                            }
+                            {displayCard===3 &&
+                                <Pie data={data3} options={pieOptions}/>
+                            }
+                        </div>
+                    </Card>
                 </div>
             );
         }
@@ -329,9 +387,9 @@ export const ChartBars = () => {
                 <div>
                     {/*{showGraph && renderTest()}*/}
                     {modal()}
-                    {showGraph && pieChart()}
-                    {showGraph && greaterHorizontalChart()}
-                    {showGraph && lowHorizontalChart()}
+                    {showGraph && pieChart()} <hr className="my-5"/>
+                    {showGraph && greaterHorizontalChart()} <hr className="my-5"/>
+                    {showGraph && lowHorizontalChart()} <hr className="my-5"/>
                     {showGraph && nullHorizontalChart()}
                 </div>
             </div>
