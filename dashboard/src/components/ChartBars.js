@@ -388,7 +388,7 @@ export const ChartBars = () => {
         let showGraph = !isloading
         return (
             <div className="ui container my-5">
-                <h3>Detector Malfunction Analysis</h3>
+                <h3>Detector Malfunction Ratio</h3>
                 <br/>
                 <div>
                     {/*{showGraph && renderTest()}*/}

@@ -138,16 +138,16 @@ export const DetectorMap = () => {
                                     <li key={e.detectorid}>
                                         ID <Badge variant="primary" onClick={()=>{handleShow(e.detectorid)}}>{e.detectorid}</Badge> at lane {e.lanenumber}:
                                         {e.totalGnumber &&
-                                        <span className="overSpeed"><b> {e.totalGnumber}</b> errors(Overspeed) occurred! </span>
+                                            <span>{' '}<Badge variant="warning"><Badge variant="light">{e.totalGnumber}</Badge> OverSpeed</Badge></span>
                                         }
                                         {e.totalLnumber &&
-                                        <span className="underSpeed"><b> {e.totalLnumber}</b> errors(Underspeed) occurred! </span>
+                                            <span>{' '}<Badge variant="danger"><Badge variant="light">{e.totalLnumber}</Badge> UnderSpeed</Badge></span>
                                         }
                                         {e.totalNnumber &&
-                                        <span className="nullSpeed"><b> {e.totalNnumber}</b> errors(NullSpeed) occurred! </span>
+                                            <span>{' '}<Badge variant="secondary"><Badge variant="light">{e.totalNnumber}</Badge> NullSpeed</Badge></span>
                                         }
                                         {(!e.totalGnumber && !e.totalLnumber && !e.totalNnumber)&&
-                                        <span className="working"> up</span>
+                                            <span>{' '}<Badge variant="success"> up </Badge></span>
                                         }
                                     </li>
                                 )}
