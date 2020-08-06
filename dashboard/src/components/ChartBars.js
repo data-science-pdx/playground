@@ -3,6 +3,7 @@ import { Context } from "./Context"
 import { DetectorMap } from "./DetectorMap"
 import {HorizontalBar, Doughnut} from 'react-chartjs-2';
 import {Modal, Button, Card, Nav} from "react-bootstrap";
+import 'chart.piecelabel.js';
 
 export const ChartBars = () => {
     const {startDate, endDate, detectoridsLow, setDetectoridsLow, isloading, setIsLoading, detectoridsHigh, setDetectoridsHigh, detectoridsNull, setDetectoridsNull, goodSpeed, setGoodSpeed, greaterSpeed, setGreaterSpeed, nullSpeed, setNullSpeed, lowSpeed, setLowSpeed, detectorId, setDetectorId} = useContext(Context)
@@ -134,6 +135,11 @@ export const ChartBars = () => {
     const pieOptions = {
         legend: {
             position: "bottom"
+        },
+        pieceLabel: {
+            render: 'percentage',
+            fontColor: 'white',
+            fontSize: 24,
         }
     }
 
@@ -246,6 +252,14 @@ export const ChartBars = () => {
         },
         legend: {
             position: "bottom"
+        },
+        scales: {
+            yAxes: [{
+                scaleLabel: {
+                    display: true,
+                    labelString: 'Detector ID'
+                }
+            }]
         }
     }
 
@@ -259,6 +273,14 @@ export const ChartBars = () => {
         },
         legend: {
             position: "bottom"
+        },
+        scales: {
+            yAxes: [{
+                scaleLabel: {
+                    display: true,
+                    labelString: 'Detector ID'
+                }
+            }]
         }
     }
 
@@ -272,6 +294,14 @@ export const ChartBars = () => {
         },
         legend: {
             position: "bottom"
+        },
+        scales: {
+            yAxes: [{
+                scaleLabel: {
+                    display: true,
+                    labelString: 'Detector ID'
+                }
+            }]
         }
     }
 
