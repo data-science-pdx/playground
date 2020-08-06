@@ -16,9 +16,9 @@ function App(){
         <Container className="Site-content">
             <ContextProvider>
                 <Header/>
-                <section id="Date"><Calendar/></section>
-                <DateTest/><hr className="my-5"/>
-                <section id="Map" ><DetailedMap/></section><hr className="my-5"/>
+                <section id="Map" ><DetailedMap/></section>
+                <hr className="my-5"/>
+                <section id="Date"><Calendar/></section><DateTest/><hr className="my-5"/>
                 <section id="Pie"><ChartBars/></section><hr className="my-5"/>
                 <Footer/>
             </ContextProvider>
