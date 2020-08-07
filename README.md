@@ -15,6 +15,7 @@ Determining the detector is malfunction by analysis of the data from the freeway
 - [Project Plan](https://github.com/data-science-pdx/freeway-analysis/blob/master/documents/Project%20Plan.pdf)
 - [Research Presentation](https://github.com/data-science-pdx/freeway-analysis/blob/master/documents/Data%20Quality%20and%20Processing%20Presentation.pdf)
 - [Midterm Report](https://github.com/data-science-pdx/freeway-analysis/blob/master/documents/Midpoint%20Report.pdf)
+- [Final Presentation](https://github.com/data-science-pdx/freeway-analysis/blob/master/documents/Freeway%20Data%20Quality%20Final%20Presentation.pdf)
 
 ## License
 
