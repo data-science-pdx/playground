@@ -15,12 +15,13 @@ var mongoose = require('mongoose');
 const asyncHandler = require('express-async-handler')
 
 var app = express(); 
-const hostname = '127.0.0.1';
-const port = 3001;
+const hostname = '0.0.0.0';
+const port = process.env.PORT;
 
 app.use(cors());
 
-mongoose.connect('mongodb://localhost:27017/freeway', {useNewUrlParser: true});
+const connectionString = "mongodb+srv://admin:admin@cluster0.k7yg4.mongodb.net/freeway?retryWrites=true&w=majority";
+mongoose.connect(connectionString, {useNewUrlParser: true});
 var uniondataSchema = new mongoose.Schema({
     detectorid:Number,
     starttime:Date,
@@ -61,7 +62,7 @@ async function traveltime(pipline2) {
   }
 }
 
-mongoose.connect('mongodb://localhost:27017/freeway', {useNewUrlParser: true});
+mongoose.connect(connectionString, {useNewUrlParser: true});
 var detectorsSchema = new mongoose.Schema({
     detectorid:Number,
     highwayid:Number,
@@ -82,7 +83,7 @@ var detectorsSchema = new mongoose.Schema({
 })
 var detectors = mongoose.model('detectors',detectorsSchema,'detectors');
 
-mongoose.connect('mongodb://localhost:27017/freeway', {useNewUrlParser: true});
+mongoose.connect(connectionString, {useNewUrlParser: true});
 var stationsummarySchema = new mongoose.Schema({
     detectorid:Number,
     milepost:Number,
@@ -97,7 +98,7 @@ var stationsummarySchema = new mongoose.Schema({
 var stationsummary = mongoose.model('stationsummary',stationsummarySchema,'stationsummary');
 
 
-mongoose.connect('mongodb://localhost:27017/freeway', {useNewUrlParser: true});
+mongoose.connect(connectionString, {useNewUrlParser: true});
 var loopdataSchema = new mongoose.Schema({
     detectorid:Number,
     starttime:Date,
@@ -110,7 +111,7 @@ var loopdataSchema = new mongoose.Schema({
 var loopdata = mongoose.model('loopdata',loopdataSchema,'loopdata');
 
 
-mongoose.connect('mongodb://localhost:27017/freeway', {useNewUrlParser: true});
+mongoose.connect(connectionString, {useNewUrlParser: true});
 var stationsSchema = new mongoose.Schema({
     milepost:Number,
     locationtext:String,
@@ -123,7 +124,7 @@ var stationsSchema = new mongoose.Schema({
 })
 var stations = mongoose.model('stations',stationsSchema,'stations');
 
-mongoose.connect('mongodb://localhost:27017/freeway', {useNewUrlParser: true});
+mongoose.connect(connectionString, {useNewUrlParser: true});
 var highwaydataSchema = new mongoose.Schema({
     detector_id:Number,
     starttime:Date,
@@ -134,7 +135,7 @@ var highwaydataSchema = new mongoose.Schema({
 var highwaydata = mongoose.model('highwaydata',highwaydataSchema,'highwaydata');
 
 
-mongoose.connect('mongodb://localhost:27017/freeway', {useNewUrlParser: true});
+mongoose.connect(connectionString, {useNewUrlParser: true});
 var highwaystationsSchema = new mongoose.Schema({
     milepost:Number,
     locationtext:String,

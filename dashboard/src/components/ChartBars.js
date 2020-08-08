@@ -12,10 +12,10 @@ export const ChartBars = () => {
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
 
-    const url = `http://localhost:3001/lessthenfive/${startDate}/${endDate}`
-    const urlTwo = `http://localhost:3001/greaterthen/${startDate}/${endDate}`
-    const urlThree = `http://localhost:3001/goodspeed/${startDate}/${endDate}`
-    const urlNull = `http://localhost:3001/null/${startDate}/${endDate}`
+    const url = `https://portland-freeway-backend.herokuapp.com/lessthenfive/${startDate}/${endDate}`
+    const urlTwo = `https://portland-freeway-backend.herokuapp.com/greaterthen/${startDate}/${endDate}`
+    const urlThree = `https://portland-freeway-backend.herokuapp.com/goodspeed/${startDate}/${endDate}`
+    const urlNull = `https://portland-freeway-backend.herokuapp.com/null/${startDate}/${endDate}`
     useEffect(() => {
         const requestHeaders = {
             "method": "POST",
@@ -190,9 +190,9 @@ export const ChartBars = () => {
 
             let data3 = {
                 labels: [
-                    'Low',
-                    'Greater',
-                    'Null'
+                    'Under',
+                    'Over',
+                    'Missing'
                 ],
                 datasets: [{
                     data: [lowSpeed.length, greaterSpeed.length, nullSpeed.length],

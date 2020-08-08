@@ -20,7 +20,7 @@ export const DetectorMap = () => {
     console.log(`#############################${idlist}`)
     //const url = `http://localhost:3001/100555`
 
-    let url = `http://localhost:3001/${idlist}`
+    let url = `https://portland-freeway-backend.herokuapp.com/${idlist}`
     //const url = `http://localhost:3001/100555`
 
     useEffect(() => {
@@ -62,7 +62,7 @@ export const DetectorMap = () => {
     },[url,setStation])
 
     const modal = () => {
-        let url = `http://localhost:3001/speeddaily/${detectorId}/${startDate}/${endDate}`
+        let url = `https://portland-freeway-backend.herokuapp.com/${detectorId}/${startDate}/${endDate}`
         return (
             <Modal show={show} onHide={handleClose} size="lg">
                 <Modal.Header closeButton>

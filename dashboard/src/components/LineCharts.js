@@ -7,7 +7,7 @@ export const LineCharts = () => {
     const {startDate, endDate,  isloading, setIsLoading, greaterSpeed, detectorId} = useContext(Context)
     const [dailySpeed, setDailySpeed] = useState([]);
 
-    const url = `http://localhost:3001/speeddaily/${detectorId}/${startDate}/${endDate}`
+    const url = `https://portland-freeway-backend.herokuapp.com/speeddaily/${detectorId}/${startDate}/${endDate}`
 
     useEffect(() => {
         const requestHeaders = {
