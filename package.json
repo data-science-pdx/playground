@@ -6,7 +6,10 @@
   "scripts": {
     "start": "run-p start:front start:back",
     "start:front": "cd dashboard && npm start",
-    "start:back": "cd backend && npm start"
+    "start:back": "cd backend && npm start",
+    "install": "run-p bootstrap:front bootstrap:back",
+    "bootstrap:front": "cd dashboard && npm install",
+    "bootstrap:back": "cd backend && npm install"
   },
   "repository": {
     "type": "git",
