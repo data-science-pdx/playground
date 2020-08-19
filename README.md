@@ -1,7 +1,8 @@
 # Freeway Analysis
 
 [![Heroku](https://img.shields.io/badge/Heroku-deployed-blueviolet)](https://portland-freeway.herokuapp.com/)
-<img alt="Website" src="https://img.shields.io/website/http/portland-freeway.herokuapp.com">
+[![Website](https://img.shields.io/website?down_color=red&down_message=down&label=frontend&up_color=brightgreen&up_message=up&url=https%3A%2F%2Fportland-freeway.herokuapp.com)](https://portland-freeway.herokuapp.com)
+[![Website](https://img.shields.io/website?down_color=red&down_message=down&label=backend&up_color=brightgreen&up_message=up&url=https%3A%2F%2Fportland-freeway-backend.herokuapp.com)](https://portland-freeway-backend.herokuapp.com)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://github.com/data-science-pdx/freeway-analysis/blob/master/LICENSE)
 
 Determining detectors are malfunction by analysis of the data from the freeway dataset.
